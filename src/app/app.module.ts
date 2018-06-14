@@ -19,7 +19,7 @@ import { PlayerHomeComponent } from './player/player-home/player-home.component'
     PlayerHomeComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'fame' }),
     AppRoutingModule
   ],
   providers: [],
