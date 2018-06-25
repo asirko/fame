@@ -8,6 +8,10 @@ import { AdminComponent } from './admin/admin.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { QuizComponent } from './player/quiz/quiz.component';
 import { PlayerHomeComponent } from './player/player-home/player-home.component';
+import { LoginComponent } from './player/login/login.component';
+import { LoginAdminComponent } from './admin/login-admin/login-admin.component';
+
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,11 +20,14 @@ import { PlayerHomeComponent } from './player/player-home/player-home.component'
     AdminComponent,
     DashboardComponent,
     QuizComponent,
-    PlayerHomeComponent
+    PlayerHomeComponent,
+    LoginComponent,
+    LoginAdminComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'fame' }),
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
