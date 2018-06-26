@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {LoginService} from '../../login.service';
 
 @Component({
   selector: 'fame-player-home',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlayerHomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit() {
+    this.loginService.addPlayer('test').subscribe(console.log);
+    this.loginService.getPlayers$().subscribe(players => console.log('players', players));
   }
 
 }
