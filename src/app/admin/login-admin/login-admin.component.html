@@ -1,3 +1,8 @@
-<p>
-  login-admin works!
-</p>
+<div class="login">
+  <form [formGroup]="loginForm" novalidate (ngSubmit)="login()">
+    <label>Admin pfez</label>
+    <input id="name" type="text" formControlName="name">
+    <input id="password" type="password" formControlName="password">
+    <button type="submit">Se connecter</button>
+  </form>
+</div>
