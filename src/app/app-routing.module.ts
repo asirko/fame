@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PlayerComponent } from './player/player.component';
 import { LoginComponent } from './player/login/login.component';
+import { PlayerGuard } from './player/player.guard';
 
 const routes: Routes = [
     {
@@ -20,6 +21,7 @@ const routes: Routes = [
     {
         path: '',
         component: PlayerComponent,
+        canActivate: [PlayerGuard],
         children: [
             {
                 path: '',

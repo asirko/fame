@@ -10,11 +10,13 @@ import { Player } from '../player';
 export class PlayerHomeComponent implements OnInit {
 
   players: Player[];
+  player: Player;
 
   constructor(private loginService: LoginService) { }
 
   ngOnInit() {
     this.loginService.getPlayers$().subscribe(players => this.players = players);
+    this.loginService.getPlayer$().subscribe(player => this.player = player);
   }
 
 }

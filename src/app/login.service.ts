@@ -1,3 +1,4 @@
+import { Player } from './player/player';
 import {Injectable} from '@angular/core';
 import * as SocketIOClient from 'socket.io-client';
 import {BehaviorSubject, Observable} from 'rxjs';
@@ -8,7 +9,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 export class LoginService {
 
   private socket: SocketIOClient.Socket;
-  private playerName$ = new BehaviorSubject<string>(null);
+  private player$ = new BehaviorSubject<Player>(null);
 
   constructor() {
     this.socket = SocketIOClient('/player');
@@ -18,7 +19,7 @@ export class LoginService {
     return new Observable(observer => {
       this.socket.emit('addPlayer', playerName, isOk => {
         if (isOk) {
-          this.playerName$.next(playerName);
+          this.player$.next({name: playerName, score: 0});
         }
         observer.next(isOk);
         observer.complete();
@@ -35,8 +36,8 @@ export class LoginService {
     });
   }
 
-  getPlayerName$(): Observable<string> {
-    return this.playerName$.asObservable();
+  getPlayer$(): Observable<Player> {
+    return this.player$.asObservable();
   }
 
 }

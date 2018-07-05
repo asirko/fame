@@ -1,7 +1,13 @@
 <div class="login">
   <form [formGroup]="loginForm" novalidate (ngSubmit)="login()">
-    <label>Nom joueur</label>
-    <input id="name" type="text" formControlName="name">
+    <div class="form-group">
+      <label>Nom joueur</label>
+      <input id="name" type="text" formControlName="name">
+    </div>
+    <div class="form-group">
+      <label>Jeux</label>
+      <input id="sessionGame" type="text" formControlName="sessionGame">
+    </div>
     <button type="submit">Rejoindre la partie</button>
   </form>
 </div>
