@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {LoginService} from '../../login.service';
+import {PlayerService} from '../player.service';
 import { Player } from '../player';
 
 @Component({
@@ -12,7 +12,7 @@ export class PlayerHomeComponent implements OnInit {
   players: Player[];
   player: Player;
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: PlayerService) { }
 
   ngOnInit() {
     this.loginService.getPlayers$().subscribe(players => this.players = players);

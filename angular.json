@@ -127,5 +127,10 @@
       }
     }
   },
-  "defaultProject": "fame"
+  "defaultProject": "fame",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

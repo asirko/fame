@@ -1,4 +1,4 @@
-import { LoginService } from './../login.service';
+import { PlayerService } from './player.service';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -9,7 +9,7 @@ import { map, tap } from 'rxjs/operators';
 })
 export class PlayerGuard implements CanActivate {
 
-  constructor(private route: Router, private loginService: LoginService) {}
+  constructor(private route: Router, private loginService: PlayerService) {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> {

@@ -1,4 +1,4 @@
-import { Player } from './player/player';
+import { Player } from './player';
 import {Injectable} from '@angular/core';
 import * as SocketIOClient from 'socket.io-client';
 import {BehaviorSubject, Observable} from 'rxjs';
@@ -6,7 +6,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class PlayerService {
 
   private socket: SocketIOClient.Socket;
   private player$ = new BehaviorSubject<Player>(null);
@@ -15,7 +15,7 @@ export class LoginService {
     this.socket = SocketIOClient('/player');
   }
 
-  addPlayer(playerName: any): Observable<boolean> {
+  addPlayer(playerName: string): Observable<boolean> {
     return new Observable(observer => {
       this.socket.emit('addPlayer', playerName, isOk => {
         if (isOk) {

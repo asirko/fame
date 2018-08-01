@@ -1,7 +1,7 @@
-import { LoginService } from './../../login.service';
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import {PlayerService} from '../player.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'fame-login',
@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private loginService: LoginService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private loginService: PlayerService, private router: Router) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
