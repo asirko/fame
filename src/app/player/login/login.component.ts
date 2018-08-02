@@ -3,6 +3,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
 
+const STORAGE_LOGIN = 'jumpGame';
+
 @Component({
   selector: 'fame-login',
   templateUrl: './login.component.html',
@@ -15,15 +17,17 @@ export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private loginService: PlayerService, private router: Router) { }
 
   ngOnInit() {
+    const login = localStorage.getItem(STORAGE_LOGIN);
+
     this.loginForm = this.formBuilder.group({
-      name: '',
-      sessionGame: ''
+      name: login
     });
   }
 
   login(): void {
     this.loginService.addPlayer(this.loginForm.value.name).subscribe(isAvailable => {
-      this.router.navigate(['']);
+      localStorage.setItem(STORAGE_LOGIN, this.loginForm.value.name);
+      this.router.navigate(['waitingroom']);
     });
   }
 }

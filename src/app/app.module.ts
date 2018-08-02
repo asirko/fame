@@ -12,6 +12,7 @@ import { LoginComponent } from './player/login/login.component';
 import { LoginAdminComponent } from './admin/login-admin/login-admin.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { WaitingRoomComponent } from './player/waiting-room/waiting-room.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     QuizComponent,
     PlayerHomeComponent,
     LoginComponent,
-    LoginAdminComponent
+    LoginAdminComponent,
+    WaitingRoomComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'fame' }),

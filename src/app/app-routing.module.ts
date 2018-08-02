@@ -8,6 +8,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PlayerComponent } from './player/player.component';
 import { LoginComponent } from './player/login/login.component';
 import { PlayerGuard } from './player/player.guard';
+import { WaitingRoomComponent } from './player/waiting-room/waiting-room.component';
 
 const routes: Routes = [
     {
@@ -26,6 +27,10 @@ const routes: Routes = [
             {
                 path: '',
                 component: PlayerHomeComponent
+            },
+            {
+                path: 'waitingroom',
+                component: WaitingRoomComponent
             },
             {
                 path: 'quiz',

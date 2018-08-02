@@ -1,8 +1,9 @@
 
 <h1>Bonjour {{ player.name }}</h1>
-<h2>{{ player.score }}</h2>
-<p>
-  player-home works!
-</p>
+<h2>Votre score: {{ player.score }}</h2>
 
-<div *ngFor="let player of players">{{ player.name }}</div>
+
+<h2>Liste des joueurs</h2>
+<ul>
+  <li *ngFor="let player of players">{{ player.name }}</li>
+</ul>
