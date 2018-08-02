@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import * as SocketIOClient from 'socket.io-client';
 import {Question} from '../question';
+import {filter} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,9 @@ export class AdminService {
 
   readonly currentQuestion$ = this._currentQuestion$.asObservable();
 
-  constructor() {}
+  constructor() {
+    this.initCurrentQuestion();
+  }
 
   /**
    * get the current question of the game
@@ -20,11 +23,12 @@ export class AdminService {
    * undefined -> end of the quiz
    * @returns {Observable<any[]>}
    */
-  getCurrentQuestion$(): Observable<any[]> {
-    return new Observable(observer => {
-      this._socket.on('currentQuestion', question => {
-        observer.next(question);
-      });
+  initCurrentQuestion(): void {
+    this._socket.on('currentQuestion', question => {
+      console.log(question);
+      if (question !== this._currentQuestion$.getValue()) {
+        this._currentQuestion$.next(question);
+      }
     });
   }
 

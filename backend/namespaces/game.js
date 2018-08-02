@@ -2,12 +2,8 @@ const dataGame = require('../data/game');
 
 module.exports = function (socket) {
 
-  console.log('connection on player namespace');
-
-  socket.on('currentQuestion', (unused, response) => {
-    console.log('request to listen current question');
-    response(dataGame.getCurrentQuestion());
-  });
+  console.log('connection on game namespace');
+  socket.emit('currentQuestion', dataGame.getCurrentQuestion());
 
   socket.on('nextQuestion', () => {
     console.log('request to go to next question');

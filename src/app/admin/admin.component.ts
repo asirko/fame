@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AdminService} from './admin.service';
 
 @Component({
   selector: 'fame-admin',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  constructor() { }
+  readonly currentQuestion$ = this.adminService.currentQuestion$;
 
-  ngOnInit() {
+  constructor(
+    private adminService: AdminService,
+  ) { }
+
+  ngOnInit() {}
+
+  next() {
+    this.adminService.nextQuestion()
+      .subscribe();
   }
 
 }

@@ -1,11 +1,28 @@
 const jsonOfQuestions = [
-
+  {
+    question: 'Quel est la couleur blanche du cheval d\'Henry IV',
+    answers: [
+      {
+        label: 'Jaune',
+        isTrue: false
+      }, {
+        label: 'Verte',
+        isTrue: false
+      }, {
+        label: 'Bleu',
+        isTrue: false
+      }, {
+        label: 'Blanc',
+        isTrue: true
+      }
+    ]
+  }
 ];
 
 let currentQuestionIndex = null;
 
 const getCurrentQuestion = () => {
-  if (!currentQuestionIndex) {
+  if (!currentQuestionIndex && currentQuestionIndex !== 0) {
     return currentQuestionIndex;
   }
   return { ...jsonOfQuestions[currentQuestionIndex] };
@@ -17,7 +34,7 @@ const nextQuestion = () => {
   } else if (currentQuestionIndex === null) {
     currentQuestionIndex = 0;
   } else if (currentQuestionIndex === jsonOfQuestions.length - 1) {
-    currentQuestionIndex === undefined;
+    currentQuestionIndex = undefined;
   } else {
     currentQuestionIndex++;
   }
