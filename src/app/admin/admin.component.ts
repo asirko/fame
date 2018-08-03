@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AdminService} from './admin.service';
+import {map, tap} from 'rxjs/operators';
+import {combineLatest} from 'rxjs';
 
 @Component({
   selector: 'fame-admin',
@@ -8,7 +10,16 @@ import {AdminService} from './admin.service';
 })
 export class AdminComponent implements OnInit {
 
+  // TODO temporaire pour les tests
   readonly currentQuestion$ = this.adminService.currentQuestion$;
+
+  readonly canGoNext$ = this.adminService.currentQuestion$.pipe(
+    map(q => q === null || (q && q.hasAnswer)),
+  );
+  readonly canShowAnswer$ = this.adminService.currentQuestion$.pipe(
+    map(q => q && !q.hasAnswer),
+  );
+  readonly thisIsTheEnd$ = combineLatest(this.canGoNext$, this.canShowAnswer$, (n, a) => !n && !a);
 
   constructor(
     private adminService: AdminService,
@@ -17,8 +28,11 @@ export class AdminComponent implements OnInit {
   ngOnInit() {}
 
   next() {
-    this.adminService.nextQuestion()
-      .subscribe();
+    this.adminService.nextQuestion().subscribe();
+  }
+
+  showAnswer(): void {
+    this.adminService.showAnswer().subscribe();
   }
 
 }

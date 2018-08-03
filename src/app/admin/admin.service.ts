@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import * as SocketIOClient from 'socket.io-client';
-import {Question} from '../question';
-import {filter} from 'rxjs/operators';
+import {GameState, Question} from '../question';
+import {skip} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,8 @@ export class AdminService {
   private _socket = SocketIOClient('/game');
   private _currentQuestion$ = new BehaviorSubject<Question>(null);
 
-  readonly currentQuestion$ = this._currentQuestion$.asObservable();
+  // the first is skipped because behaviorSubject have an initial value;
+  readonly currentQuestion$ = this._currentQuestion$.asObservable().pipe(skip(1));
 
   constructor() {
     this.initCurrentQuestion();
@@ -26,7 +27,11 @@ export class AdminService {
   initCurrentQuestion(): void {
     this._socket.on('currentQuestion', question => {
       console.log(question);
-      if (question !== this._currentQuestion$.getValue()) {
+      if (question === GameState.NOT_STARTED) {
+        this._currentQuestion$.next(null);
+      } else if (question === GameState.FINISHED) {
+        this._currentQuestion$.next(undefined);
+      } else {
         this._currentQuestion$.next(question);
       }
     });
@@ -34,8 +39,14 @@ export class AdminService {
 
   nextQuestion(): Observable<void> {
     return new Observable(observer => {
+      this._socket.emit('nextQuestion', null, () => observer.next());
+    });
+  }
+
+  showAnswer(): Observable<void> {
+    return new Observable(observer => {
       if (this._currentQuestion$.getValue() !== undefined) {
-        this._socket.emit('nextQuestion', null, () => observer.next());
+        this._socket.emit('showAnswer', null, () => observer.next());
       } else {
         observer.next();
       }

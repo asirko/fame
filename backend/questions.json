@@ -1,0 +1,20 @@
+[
+  {
+    "questionLabel": "Quel est la couleur blanche du cheval d'Henry IV ?",
+    "choices": [
+      {
+        "label": "Jaune",
+        "isTrue": false
+      }, {
+        "label": "Verte",
+        "isTrue": false
+      }, {
+        "label": "Bleu",
+        "isTrue": false
+      }, {
+        "label": "Blanc",
+        "isTrue": true
+      }
+    ]
+  }
+]
