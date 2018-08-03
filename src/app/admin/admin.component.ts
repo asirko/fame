@@ -10,16 +10,9 @@ import {combineLatest} from 'rxjs';
 })
 export class AdminComponent implements OnInit {
 
-  // TODO temporaire pour les tests
   readonly currentQuestion$ = this.adminService.currentQuestion$;
-
-  readonly canGoNext$ = this.adminService.currentQuestion$.pipe(
-    map(q => q === null || (q && q.hasAnswer)),
-  );
-  readonly canShowAnswer$ = this.adminService.currentQuestion$.pipe(
-    map(q => q && !q.hasAnswer),
-  );
-  readonly thisIsTheEnd$ = combineLatest(this.canGoNext$, this.canShowAnswer$, (n, a) => !n && !a);
+  readonly isNotStarted$ = this.adminService.hasNotStarted$;
+  readonly hasFinished$ = this.adminService.hasFinished$;
 
   constructor(
     private adminService: AdminService,
