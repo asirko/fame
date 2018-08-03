@@ -1,4 +1,4 @@
-const dataGame = require('../data/game');
+const dataGame = require('../service/game');
 
 module.exports = function (socket) {
 
