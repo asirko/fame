@@ -7,7 +7,6 @@ module.exports = function (socket) {
   socket.emit('currentQuestion', dataGame.getCurrentQuestion());
 
   socket.on('nextQuestion', () => {
-    console.log('next');
     socket.nsp.emit('currentQuestion', dataGame.nextQuestion());
   });
 

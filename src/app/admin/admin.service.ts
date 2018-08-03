@@ -26,7 +26,6 @@ export class AdminService {
    */
   initCurrentQuestion(): void {
     this._socket.on('currentQuestion', question => {
-      console.log(question);
       if (question === GameState.NOT_STARTED) {
         this._currentQuestion$.next(null);
       } else if (question === GameState.FINISHED) {
