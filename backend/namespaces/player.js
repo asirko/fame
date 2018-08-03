@@ -37,4 +37,7 @@ module.exports = function (socket) {
     updateAllPlayers();
   });
 
+  // TODO: Ajouter:
+  // - répondre à la question (stocker réponse dans localData)
+
 };

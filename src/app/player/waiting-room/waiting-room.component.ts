@@ -1,3 +1,4 @@
+import { AdminService } from './../../admin/admin.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WaitingRoomComponent implements OnInit {
 
-  constructor() { }
+  constructor(private adminService: AdminService) { }
 
   ngOnInit() {
+    this.adminService.currentQuestion$.subscribe((res) => console.log(res));
   }
 
 }
