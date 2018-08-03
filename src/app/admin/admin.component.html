@@ -1,3 +1,20 @@
-<p>
-  admin works!
-</p>
+
+<div class="controls">
+  <button *ngIf="canGoNext$ | async" (click)="next()">Question suivante</button>
+  <button *ngIf="canShowAnswer$ | async" (click)="showAnswer()">Montrer la réponse</button>
+</div>
+
+<div *ngIf="thisIsTheEnd$ | async">
+  Vous avez fini tout le quiz
+</div>
+
+<div *ngIf="currentQuestion$ | async as currentQuestion">
+  <div>
+    {{ currentQuestion.questionLabel }}
+    <ul>
+      <li *ngFor="let choice of currentQuestion.choices">
+        <span [style.color]="choice.isTrue ? 'green' : ''" >{{ choice.label }}</span>
+      </li>
+    </ul>
+  </div>
+</div>
