@@ -1,17 +1,22 @@
 [
   {
+    "id": 0,
     "questionLabel": "Quel est la couleur blanche du cheval d'Henry IV ?",
     "choices": [
       {
+        "id": 0,
         "label": "Jaune",
         "isTrue": false
       }, {
+        "id": 1,
         "label": "Verte",
         "isTrue": false
       }, {
+        "id": 2,
         "label": "Bleu",
         "isTrue": false
       }, {
+        "id": 3,
         "label": "Blanc",
         "isTrue": true
       }
