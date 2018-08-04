@@ -5,12 +5,13 @@
     "ng": "ng",
     "start": "concurrently \"npm run start:front\" \"npm run start:server\"",
     "start:front": "ng serve -o --proxy-config proxy-config.json",
-    "start:server": "nodemon backend/server.js",
+    "start:server": "nodemon",
     "build": "npm run build:front",
     "build:front": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "ts-node": "ts-node"
   },
   "private": true,
   "dependencies": {
