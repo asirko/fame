@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io';
-import { getCurrentQuestion, getQuestionWithAnswer, nextQuestion } from '../service/game';
+import { getCurrentQuestion, getQuestionWithAnswer, nextQuestion } from '../controlers/game';
 
 export function manageGame (socket: Socket) {
 

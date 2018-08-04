@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io';
-import { addPlayer, disconnectPlayer, getPlayer } from '../service/player';
+import { addPlayer, disconnectPlayer, getPlayer } from '../controlers/player';
 
 export function managePlayer (socket: Socket) {
 
