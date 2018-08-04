@@ -35,7 +35,9 @@ export function getCurrentQuestion(): Question | GameSate {
 
 export function getCurrentQuestionOrNull(): Question {
   const currentQuestion = getCurrentQuestion();
-  if (Object.values(GameSate).includes(currentQuestion)) {
+  const gameStates = Object.keys(GameSate).map(k => GameSate[k]);
+  const isAGameState = gameStates.indexOf(currentQuestion) !== -1;
+  if (isAGameState) {
     return null;
   }
   return <Question>currentQuestion;

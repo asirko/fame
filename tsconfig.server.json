@@ -3,10 +3,10 @@
     "module": "commonjs",
     "esModuleInterop": false,
     "target": "es6",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "dist",
+    "sourceMap": false,
+    "outDir": "dist/backend",
     "baseUrl": ".",
     "paths": {
       "*": [
@@ -15,7 +15,7 @@
       ]
     }
   },
-  "include": [
-    "src/**/*"
+  "files": [
+    "backend/index.ts"
   ]
 }
