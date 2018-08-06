@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as http from 'http';
 import * as socketIO from 'socket.io';
 import { initAllSocketsAPI } from './api';
+import { logger } from './logger';
 
 const server = new http.Server(express());
 
@@ -9,6 +10,8 @@ const server = new http.Server(express());
 const io = socketIO(server);
 initAllSocketsAPI(io);
 
-server.listen(3000, () => {
-  console.log('listening on *:3000');
+const port = process.env.PORT || 3000;
+
+server.listen(port, () => {
+  logger.info(`listening on: ${port}`);
 });

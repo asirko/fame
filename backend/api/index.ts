@@ -1,13 +1,14 @@
 import { Server } from 'socket.io';
 import { manageGame } from './game';
 import { managePlayer } from './player';
+import { logger } from '../logger';
 
 export function initAllSocketsAPI (io: Server): void {
 
-  console.log('create namespace player');
+  logger.info('create namespace player');
   io.of('/player').on('connection', managePlayer);
 
-  console.log('create namespace game');
+  logger.info('create namespace game');
   io.of('/game').on('connection', manageGame);
 
 }

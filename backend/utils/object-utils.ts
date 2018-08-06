@@ -33,7 +33,7 @@ function simpleMergeDeep(target: any, source: any) {
           }
           simpleMergeDeep(target[key], source[key]);
         } else {
-          target[key] = source[key];
+          target[key] = clone(source[key]);
         }
       }
     }

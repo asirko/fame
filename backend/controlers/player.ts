@@ -2,6 +2,7 @@
 // Ce singleton permet de regrouper les info liée aux joueurs
 import { Player } from '../models';
 import { getCurrentQuestionOrNull } from './game';
+import { logger } from '../logger';
 
 // ATTENTION cette données est mutable !
 // n'exposer que des clone pour éviter des effet de bord !!
@@ -41,7 +42,7 @@ export function addPlayer(name: string, id: string): boolean {
     return true;
   }
 
-  console.error('should have return something');
+  logger.error('should have return something');
   return false;
 }
 
@@ -53,13 +54,13 @@ export function addPlayer(name: string, id: string): boolean {
 function storeAnswer(playerId: string, choiceId: number): void {
   const player = players.find(p => p.id === playerId);
   if (!player) {
-    console.error('Un joueur non authentifié a pu répondre à une question.');
+    logger.error('Un joueur non authentifié a pu répondre à une question.');
     return;
   }
 
   const currentQuestion = getCurrentQuestionOrNull();
   if (!currentQuestion) {
-    console.error('Tentative de réponse alors qu\'il n\'y a pas de question en cours.');
+    logger.error('Tentative de réponse alors qu\'il n\'y a pas de question en cours.');
     return;
   }
   const questionId = currentQuestion.id;

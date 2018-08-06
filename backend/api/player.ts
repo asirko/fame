@@ -1,14 +1,15 @@
 import { Socket } from 'socket.io';
 import { addPlayer, disconnectPlayer, getPlayer } from '../controlers/player';
+import { logger } from '../logger';
 
 export function managePlayer (socket: Socket) {
 
-  console.log('connection on player namespace');
+  logger.info('connection on player namespace');
 
   socket.on('addPlayer', (playerName: string, response: (isAvailable: boolean) => void) => {
-    console.log('request for new player : ', playerName);
+    logger.info('request for new player : ', playerName);
     const isAvailable = addPlayer(playerName, socket.id);
-    console.log(`Name '${playerName}' is ${isAvailable ? '' : 'NOT'} available`);
+    logger.info(`Name '${playerName}' is ${isAvailable ? '' : 'NOT'} available`);
     response(isAvailable);
     if (isAvailable) {
       updateAllPlayers(socket);
@@ -17,7 +18,7 @@ export function managePlayer (socket: Socket) {
 
   socket.on('disconnect', () => {
     const player = getPlayer(socket.id);
-    console.log(`${(player && player.name) || '-UNKNOWN-'} left the game`);
+    logger.info(`${(player && player.name) || '-UNKNOWN-'} left the game`);
     disconnectPlayer(socket.id);
     updateAllPlayers(socket);
   });
