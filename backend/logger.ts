@@ -13,7 +13,10 @@ if (!existsSync(LOG_PATH)) {
 const fameLogFormat = format.combine(
   format.label({ label: 'FAME' }),
   format.timestamp(),
-  format.printf(info => `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`),
+  format.printf(info => {
+    const {timestamp, label, level, message, ...data} = info;
+    return `${timestamp} [${label}] ${level}: ${message} ${JSON.stringify(data)}`;
+  }),
 );
 
 export const logger = createLogger({

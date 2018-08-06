@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AdminService} from './admin.service';
-import {map, tap} from 'rxjs/operators';
-import {combineLatest} from 'rxjs';
+import { AdminService } from './admin.service';
 
 @Component({
   selector: 'fame-admin',

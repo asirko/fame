@@ -7,9 +7,9 @@ export function managePlayer (socket: Socket) {
   logger.info('connection on player namespace');
 
   socket.on('addPlayer', (playerName: string, response: (isAvailable: boolean) => void) => {
-    logger.info('request for new player : ', playerName);
+    logger.info('request for new player', { askedName: playerName, socketId: socket.id});
     const isAvailable = addPlayer(playerName, socket.id);
-    logger.info(`Name '${playerName}' is ${isAvailable ? '' : 'NOT'} available`);
+    logger.info(`Name '${playerName}' is ${isAvailable ? '' : 'NOT'} available`, {socketId: socket.id});
     response(isAvailable);
     if (isAvailable) {
       updateAllPlayers(socket);
@@ -18,7 +18,7 @@ export function managePlayer (socket: Socket) {
 
   socket.on('disconnect', () => {
     const player = getPlayer(socket.id);
-    logger.info(`${(player && player.name) || '-UNKNOWN-'} left the game`);
+    logger.info(`${(player && player.name) || '-UNKNOWN-'} left the game`, {socketId: socket.id});
     disconnectPlayer(socket.id);
     updateAllPlayers(socket);
   });
