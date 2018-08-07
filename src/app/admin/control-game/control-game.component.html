@@ -6,7 +6,7 @@
   </div>
 
   <div>
-    {{ currentQuestion.questionLabel }}
+    <markdown [data]="currentQuestion.questionLabel"></markdown>
     <ul>
       <li *ngFor="let choice of currentQuestion.choices">
         <span [style.color]="choice.isTrue ? 'green' : ''" >{{ choice.label }}</span>
