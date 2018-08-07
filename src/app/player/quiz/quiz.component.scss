@@ -1,0 +1,6 @@
+.choice {
+    cursor: pointer;
+    &.selected {
+        color: orange;
+    }
+}

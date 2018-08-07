@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io';
-import { addPlayer, disconnectPlayer, getPlayer } from '../controlers/player';
+import { addPlayer, disconnectPlayer, getPlayer, storeAnswer } from '../controlers/player';
 import { logger } from '../logger';
 
 export function managePlayer (socket: Socket) {
@@ -21,6 +21,11 @@ export function managePlayer (socket: Socket) {
     logger.info(`${(player && player.name) || '-UNKNOWN-'} left the game`, {socketId: socket.id});
     disconnectPlayer(socket.id);
     updateAllPlayers(socket);
+  });
+
+  socket.on('storeAnswer', (choiceId: number) => {
+    const player = getPlayer(socket.id);
+    storeAnswer(player.id, choiceId);
   });
 
   // TODO: Ajouter:
