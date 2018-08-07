@@ -1,24 +1,90 @@
 [
   {
     "id": 0,
-    "questionLabel": "Quel est la couleur blanche du cheval d'Henry IV ?",
+    "questionLabel": "Qui a écris cette ligne de code: \n\n```typescript\nconst player = players.find(p => p.id === playerId);\n```",
     "choices": [
       {
         "id": 0,
-        "label": "Jaune",
+        "label": "Étienne",
         "isTrue": false
       }, {
         "id": 1,
-        "label": "Verte",
+        "label": "Frédéric",
         "isTrue": false
       }, {
         "id": 2,
-        "label": "Bleu",
+        "label": "Mitch",
         "isTrue": false
       }, {
         "id": 3,
-        "label": "Blanc",
+        "label": "Alexandre",
         "isTrue": true
+      }
+    ]
+  }, {
+    "id": 0,
+    "questionLabel": "Qui a essayé de nous changer les idées avec du badminton&nbsp;?",
+    "choices": [
+      {
+        "id": 0,
+        "label": "Étienne",
+        "isTrue": true
+      }, {
+        "id": 1,
+        "label": "Frédéric",
+        "isTrue": false
+      }, {
+        "id": 2,
+        "label": "Mitch",
+        "isTrue": false
+      }, {
+        "id": 3,
+        "label": "Alexandre",
+        "isTrue": false
+      }
+    ]
+  }, {
+    "id": 0,
+    "questionLabel": "Qui avait quasiment fini les maquettes avant que l'on attaque le code&nbsp;?",
+    "choices": [
+      {
+        "id": 0,
+        "label": "Étienne",
+        "isTrue": false
+      }, {
+        "id": 1,
+        "label": "Frédéric",
+        "isTrue": true
+      }, {
+        "id": 2,
+        "label": "Mitch",
+        "isTrue": false
+      }, {
+        "id": 3,
+        "label": "Alexandre",
+        "isTrue": false
+      }
+    ]
+  }, {
+    "id": 0,
+    "questionLabel": "Qui a un surnom en lien avec un célèbre devin &nbsp;?",
+    "choices": [
+      {
+        "id": 0,
+        "label": "Étienne",
+        "isTrue": false
+      }, {
+        "id": 1,
+        "label": "Frédéric",
+        "isTrue": false
+      }, {
+        "id": 2,
+        "label": "Mitch",
+        "isTrue": true
+      }, {
+        "id": 3,
+        "label": "Alexandre",
+        "isTrue": false
       }
     ]
   }

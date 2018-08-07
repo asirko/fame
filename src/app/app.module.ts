@@ -16,6 +16,7 @@ import { WaitingRoomComponent } from './player/waiting-room/waiting-room.compone
 import { BeforeStartComponent } from './admin/before-start/before-start.component';
 import { ControlGameComponent } from './admin/control-game/control-game.component';
 import { ResultsComponent } from './admin/results/results.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [
@@ -34,8 +35,9 @@ import { ResultsComponent } from './admin/results/results.component';
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'fame' }),
+    MarkdownModule.forRoot(),
+    ReactiveFormsModule,
     AppRoutingModule,
-    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
