@@ -56,6 +56,7 @@ export class AdminService {
         this._socket.emit('showAnswer', null, () => observer.next());
       } else {
         observer.next();
+        observer.complete();
       }
     });
   }
