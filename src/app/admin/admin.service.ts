@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import * as SocketIOClient from 'socket.io-client';
-import {GameState, Question} from '../question';
-import {map, skip} from 'rxjs/operators';
+import { GameState, Question } from '../question';
+import { filter, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -27,23 +27,26 @@ export class AdminService {
       this._currentQuestion$.next(question);
     });
 
-    this.hasNotStarted$ = this._currentQuestion$.asObservable().pipe(
-      skip(1),
+    const onlyValues = this._currentQuestion$.asObservable().pipe(
+      filter(v => v !== null),
+    );
+    this.hasNotStarted$ = onlyValues.pipe(
       map(q => q === GameState.NOT_STARTED),
     );
-    this.currentQuestion$ = this._currentQuestion$.asObservable().pipe(
-      skip(1),
+    this.currentQuestion$ = onlyValues.pipe(
       map(q => q === GameState.NOT_STARTED || q === GameState.FINISHED ? null : q),
     );
-    this.hasFinished$ = this._currentQuestion$.asObservable().pipe(
-      skip(1),
+    this.hasFinished$ = onlyValues.pipe(
       map(q => q === GameState.FINISHED),
     );
   }
 
   nextQuestion(): Observable<void> {
     return new Observable(observer => {
-      this._socket.emit('nextQuestion', null, () => observer.next());
+      this._socket.emit('nextQuestion', null, () => {
+        observer.next();
+        observer.complete();
+      });
     });
   }
 
@@ -53,6 +56,7 @@ export class AdminService {
         this._socket.emit('showAnswer', null, () => observer.next());
       } else {
         observer.next();
+        observer.complete();
       }
     });
   }
