@@ -4,6 +4,7 @@ export enum GameState {
 }
 
 export class Question {
+  id: number;
   questionLabel: string;
   choices: {
     label: string;

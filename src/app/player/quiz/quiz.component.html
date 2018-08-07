@@ -1,7 +1,7 @@
 <h1>Quiz</h1>
 
 <div *ngIf="currentQuestion" class="quiz">
-  <div class="question">{{ currentQuestion.questionLabel }}</div>
+  <markdown class="question" [data]="currentQuestion.questionLabel"></markdown>
 
   <ul class="choices">
     <li *ngFor="let choice of currentQuestion.choices"
@@ -11,5 +11,10 @@
       {{ choice.label }}
     </li>
   </ul>
+
+  <div *ngIf="isCorrection && choiceSelected">
+    <span *ngIf="isRight" class="correction-right">Bonne réponse!</span>
+    <span *ngIf="!isRight" class="correction-wrong">Mauvaise réponse</span>
+  </div>
 
 </div>

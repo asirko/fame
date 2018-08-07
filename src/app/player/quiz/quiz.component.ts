@@ -10,20 +10,37 @@ import { PlayerService } from './../player.service';
 export class QuizComponent implements OnInit {
 
   currentQuestion = null;
+  choiceSelected: number = null;
+  isCorrection = false;
+  isRight = false;
 
   constructor(private adminService: AdminService, private playerService: PlayerService) { }
 
   ngOnInit() {
-    this.adminService.currentQuestion$.subscribe(q => this.currentQuestion = q);
+    this.adminService.currentQuestion$.subscribe(q => {
+      this.isCorrection = q.hasAnswer;
+      if (!this.currentQuestion || this.currentQuestion.id !== q.id) {
+        this.currentQuestion = q;
+      }
+
+      if (this.currentQuestion.id === q.id && q.hasAnswer) {
+        this.showAnswer(q.choices);
+      }
+    });
   }
 
   selectAnswer(choice): void {
     if (!this.currentQuestion.hasAnswer) {
       this.currentQuestion.choices.map(c => c.isSelected = false);
       choice.isSelected = !choice.isSelected;
-      const choiceId = choice.isSelected ? choice.id : null;
-      this.playerService.storeAnswer(choiceId);
+      this.choiceSelected = choice.isSelected ? choice.id : null;
+      this.playerService.storeAnswer(this.choiceSelected);
     }
+  }
+
+  showAnswer(choices): void {
+    const choice = choices.filter(c => c.id === this.choiceSelected && c.isTrue);
+    this.isRight = choice.length === 1;
   }
 
 }
