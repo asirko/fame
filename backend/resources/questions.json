@@ -1,7 +1,7 @@
 [
   {
     "id": 0,
-    "questionLabel": "Qui a écris cette ligne de code: \n\n```typescript\nconst player = players.find(p => p.id === playerId);\n```",
+    "questionLabel": "Qui a écris cette ligne de code\u00A0: \n\n```typescript\nconst player = players.find(p => p.id === playerId);\n```",
     "choices": [
       {
         "id": 0,
@@ -23,7 +23,7 @@
     ]
   }, {
     "id": 0,
-    "questionLabel": "Qui a essayé de nous changer les idées avec du badminton&nbsp;?",
+    "questionLabel": "Qui a essayé de nous changer les idées avec du badminton\u00A0?",
     "choices": [
       {
         "id": 0,
@@ -45,7 +45,7 @@
     ]
   }, {
     "id": 0,
-    "questionLabel": "Qui avait quasiment fini les maquettes avant que l'on attaque le code&nbsp;?",
+    "questionLabel": "Qui avait quasiment fini les maquettes avant que l'on attaque le code\u00A0?",
     "choices": [
       {
         "id": 0,
@@ -67,7 +67,7 @@
     ]
   }, {
     "id": 0,
-    "questionLabel": "Qui a un surnom en lien avec un célèbre devin &nbsp;?",
+    "questionLabel": "Qui a un surnom en lien avec un célèbre devin\u00A0?",
     "choices": [
       {
         "id": 0,
