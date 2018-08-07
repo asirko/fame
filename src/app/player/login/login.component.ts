@@ -13,12 +13,12 @@ const STORAGE_LOGIN = 'jumpGame';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
+  isLoginUsed = false;
 
   constructor(private formBuilder: FormBuilder, private loginService: PlayerService, private router: Router) { }
 
   ngOnInit() {
     const login = localStorage.getItem(STORAGE_LOGIN);
-
     this.loginForm = this.formBuilder.group({
       name: login
     });
@@ -26,8 +26,11 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     this.loginService.addPlayer(this.loginForm.value.name).subscribe(isAvailable => {
-      localStorage.setItem(STORAGE_LOGIN, this.loginForm.value.name);
-      this.router.navigate(['waitingroom']);
+      this.isLoginUsed = !isAvailable;
+      if (isAvailable) {
+        localStorage.setItem(STORAGE_LOGIN, this.loginForm.value.name);
+        this.router.navigate(['waitingroom']);
+      }
     });
   }
 }

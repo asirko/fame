@@ -40,4 +40,8 @@ export class PlayerService {
     return this.player$.asObservable();
   }
 
+  storeAnswer(choiceId: number): void {
+    this.socket.emit('storeAnswer', choiceId);
+  }
+
 }

@@ -51,7 +51,7 @@ export function addPlayer(name: string, id: string): boolean {
  * @param {string} playerId
  * @param {number} choiceId
  */
-function storeAnswer(playerId: string, choiceId: number): void {
+export function storeAnswer(playerId: string, choiceId: number): void {
   const player = players.find(p => p.id === playerId);
   if (!player) {
     logger.error('Un joueur non authentifié a pu répondre à une question.');
@@ -75,6 +75,7 @@ function storeAnswer(playerId: string, choiceId: number): void {
       questionId,
     });
   }
+  logger.info('Réponse sélectionnée ' + choiceId + ' pour la question ' + questionId + ' par user ' + player.id);
 }
 
 /**

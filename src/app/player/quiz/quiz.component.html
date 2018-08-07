@@ -1,3 +1,15 @@
-<p>
-  quiz works!
-</p>
+<h1>Quiz</h1>
+
+<div *ngIf="currentQuestion" class="quiz">
+  <div class="question">{{ currentQuestion.questionLabel }}</div>
+
+  <ul class="choices">
+    <li *ngFor="let choice of currentQuestion.choices"
+      class="choice"
+      [ngClass]="{'selected': choice.isSelected}"
+      (click)="selectAnswer(choice)">
+      {{ choice.label }}
+    </li>
+  </ul>
+
+</div>
