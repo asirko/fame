@@ -13,6 +13,9 @@ import { LoginAdminComponent } from './admin/login-admin/login-admin.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { WaitingRoomComponent } from './player/waiting-room/waiting-room.component';
+import { BeforeStartComponent } from './admin/before-start/before-start.component';
+import { ControlGameComponent } from './admin/control-game/control-game.component';
+import { ResultsComponent } from './admin/results/results.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { WaitingRoomComponent } from './player/waiting-room/waiting-room.compone
     PlayerHomeComponent,
     LoginComponent,
     LoginAdminComponent,
-    WaitingRoomComponent
+    WaitingRoomComponent,
+    BeforeStartComponent,
+    ControlGameComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'fame' }),

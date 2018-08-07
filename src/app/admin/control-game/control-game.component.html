@@ -1,0 +1,16 @@
+<div *ngIf="currentQuestion$ | async as currentQuestion">
+
+  <div class="controls">
+    <button *ngIf="currentQuestion.hasAnswer" (click)="next()">Question suivante</button>
+    <button *ngIf="!currentQuestion.hasAnswer" (click)="showAnswer()">Montrer la réponse</button>
+  </div>
+
+  <div>
+    {{ currentQuestion.questionLabel }}
+    <ul>
+      <li *ngFor="let choice of currentQuestion.choices">
+        <span [style.color]="choice.isTrue ? 'green' : ''" >{{ choice.label }}</span>
+      </li>
+    </ul>
+  </div>
+</div>
