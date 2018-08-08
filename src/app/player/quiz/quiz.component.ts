@@ -30,7 +30,7 @@ export class QuizComponent implements OnInit {
   }
 
   selectAnswer(choice): void {
-    if (!this.currentQuestion.hasAnswer) {
+    if (!this.isCorrection) {
       this.currentQuestion.choices.map(c => c.isSelected = false);
       choice.isSelected = !choice.isSelected;
       this.choiceSelected = choice.isSelected ? choice.id : null;
@@ -42,5 +42,8 @@ export class QuizComponent implements OnInit {
     const choice = choices.filter(c => c.id === this.choiceSelected && c.isTrue);
     this.isRight = choice.length === 1;
   }
+
+  // TODO: EFI - Mettre en valeurs la bonne réponse retournée par le serveur
+  // TODO: EFI - Préparer l'affichage du score user
 
 }
