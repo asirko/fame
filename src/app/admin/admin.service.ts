@@ -41,7 +41,7 @@ export class AdminService {
     );
   }
 
-  nextQuestion(): Observable<void> {
+  nextQuestion$(): Observable<void> {
     return new Observable(observer => {
       this._socket.emit('nextQuestion', null, () => {
         observer.next();
@@ -50,14 +50,18 @@ export class AdminService {
     });
   }
 
-  showAnswer(): Observable<void> {
+  showAnswer$(): Observable<void> {
     return new Observable(observer => {
       if (this._currentQuestion$.getValue() !== undefined) {
-        this._socket.emit('showAnswer', null, () => observer.next());
+        this._socket.emit('showAnswer', null, () => {
+          observer.next();
+          observer.complete();
+        });
       } else {
         observer.next();
         observer.complete();
       }
     });
   }
+
 }

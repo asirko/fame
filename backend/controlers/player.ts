@@ -1,7 +1,7 @@
 // Gère l'ensemble des player
 // Ce singleton permet de regrouper les info liée aux joueurs
-import { Player } from '../models';
-import { getCurrentQuestionOrNull } from './game';
+import { Player, PlayerSummary } from '../models';
+import { getCurrentQuestionOrNull, getScore } from './game';
 import { logger } from '../logger';
 
 // ATTENTION cette données est mutable !
@@ -81,8 +81,25 @@ export function storeAnswer(playerId: string, choiceId: number): void {
 /**
  * Génère un récapitulatif des score
  */
-export function getFullResults() {
-  // todo
+export function getGameSummary(): PlayerSummary[] {
+  return players.map(p => ({
+    name: p.name,
+    isConnected: p.isConnected,
+    score: getScore(p.answers),
+    currentAnswer: getCurrentAnswer(p),
+  })).sort((a, b) => a.score - b.score);
+}
+
+function getCurrentAnswer(p: Player): string {
+  const currentQuestion = getCurrentQuestionOrNull();
+  if (!currentQuestion) {
+    return '';
+  }
+  const currentAnswer = p.answers.find(a => a.questionId === currentQuestion.id);
+  if (!currentAnswer) {
+    return '';
+  }
+  return currentQuestion.choices.find(c => c.id === currentAnswer.choiceId).label;
 }
 
 export function disconnectPlayer(id: string) {

@@ -3,6 +3,7 @@ import { AdminService } from './admin.service';
 import { combineLatest, Subject } from 'rxjs';
 import { distinctUntilChanged, map, takeUntil, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PlayerService } from '../player/player.service';
 
 @Component({
   selector: 'fame-admin',
@@ -17,11 +18,15 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   constructor(
     private adminService: AdminService,
+    private playerService: PlayerService,
     private router: Router,
     private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
+
+    this.playerService.allPlayers$.subscribe(console.log);
+
     combineLatest(this.isNotStarted$, this.hasFinished$).pipe(
       takeUntil(this.destroy$),
       map(([before, after]) => (-before) + (+after)), // -1 before, 0 into, 1 after

@@ -17,11 +17,11 @@ export class ControlGameComponent implements OnInit {
   ngOnInit() {}
 
   next() {
-    this.adminService.nextQuestion().subscribe();
+    this.adminService.nextQuestion$().subscribe();
   }
 
   showAnswer(): void {
-    this.adminService.showAnswer().subscribe();
+    this.adminService.showAnswer$().subscribe();
   }
 
 }
