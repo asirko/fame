@@ -2,3 +2,9 @@
 <div class="controls">
   <button (click)="next()">Démarrer le quiz</button>
 </div>
+
+<div class="players">
+  <div class="player" *ngFor="let player of players$ | async">
+    {{ player.name }}
+  </div>
+</div>

@@ -2,8 +2,8 @@
 // Ce singleton permet d'assurer que tout le monde se base sur
 // la même information.
 
-import { Question } from '../models';
-import { clone, mergeDeep } from '../utils/object-utils';
+import { Answer, Choice, Question } from '../models';
+import { clone } from '../utils/object-utils';
 
 enum GameSate {
   HAS_NOT_STARTED = 'HAS_NOT_STARTED',
@@ -41,6 +41,19 @@ export function getCurrentQuestionOrNull(): Question {
     return null;
   }
   return <Question>currentQuestion;
+}
+
+export function getScore(answers: Answer[]): number {
+  return answers.map(a => getChoice(a.questionId, a.choiceId))
+    .map(c => +c.isTrue)
+    .reduce((total, point) => total + point, 0);
+}
+
+function getChoice(questionId: number, choiceId): Choice {
+  return jsonOfQuestions
+    .find(q => q.id === questionId)
+    .choices
+    .find(c => c.id === choiceId);
 }
 
 /**

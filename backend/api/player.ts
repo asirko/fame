@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io';
-import { addPlayer, disconnectPlayer, getPlayer, storeAnswer } from '../controlers/player';
+import { addPlayer, disconnectPlayer, getGameSummary, getPlayer, storeAnswer } from '../controlers/player';
 import { logger } from '../logger';
 
 export function managePlayer (socket: Socket) {
@@ -34,5 +34,5 @@ export function managePlayer (socket: Socket) {
 }
 
 function updateAllPlayers(socket: Socket): void {
-  socket.nsp.emit('allPlayers', [/* liste des noms des joueurs */]);
+  socket.nsp.emit('allPlayers', getGameSummary());
 }

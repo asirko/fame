@@ -5,6 +5,13 @@ export class Player {
   answers: Answer[];
 }
 
+export class PlayerSummary {
+  name: string;
+  isConnected: boolean;
+  score: number;
+  currentAnswer?: string;
+}
+
 export class Answer {
   questionId: number;
   choiceId: number;
