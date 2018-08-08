@@ -1,8 +1,15 @@
-import { Socket } from 'socket.io';
-import { addPlayer, disconnectPlayer, getGameSummary, getPlayer, storeAnswer } from '../controlers/player';
+import { Namespace, Socket } from 'socket.io';
+import { addPlayer, disconnectPlayer, getPlayer, playersScore$, playersScoreSnapshot, storeAnswer } from '../controlers/player';
 import { logger } from '../logger';
 
-export function managePlayer (socket: Socket) {
+export function initPlayerNamespace(nsp: Namespace) {
+
+  playersScore$.subscribe(gameSummary => nsp.emit('allPlayers', gameSummary));
+
+  nsp.on('connection', managePlayer);
+}
+
+function managePlayer (socket: Socket) {
 
   logger.info('connection on player namespace');
 
@@ -11,16 +18,12 @@ export function managePlayer (socket: Socket) {
     const isAvailable = addPlayer(playerName, socket.id);
     logger.info(`Name '${playerName}' is ${isAvailable ? '' : 'NOT'} available`, {socketId: socket.id});
     response(isAvailable);
-    if (isAvailable) {
-      updateAllPlayers(socket);
-    }
   });
 
   socket.on('disconnect', () => {
     const player = getPlayer(socket.id);
     logger.info(`${(player && player.name) || '-UNKNOWN-'} left the game`, {socketId: socket.id});
     disconnectPlayer(socket.id);
-    updateAllPlayers(socket);
   });
 
   socket.on('storeAnswer', (choiceId: number) => {
@@ -28,11 +31,10 @@ export function managePlayer (socket: Socket) {
     storeAnswer(player.id, choiceId);
   });
 
+  // envoit une valeur initial de résumé du jeu lorsque l'utilisateur se connecte
+  socket.on('allPlayers', () => playersScoreSnapshot());
+
   // TODO: Ajouter:
   // - répondre à la question (stocker réponse dans le service associé)
 
-}
-
-function updateAllPlayers(socket: Socket): void {
-  socket.nsp.emit('allPlayers', getGameSummary());
 }

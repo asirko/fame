@@ -4,7 +4,7 @@
 </div>
 
 <div class="players">
-  <div class="player" *ngFor="let player of players$ | async">
+  <div class="player" *ngFor="let player of players$ | async" [ngClass]="player.isConnected ? 'online' : 'offline'">
     {{ player.name }}
   </div>
 </div>

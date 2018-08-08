@@ -1,8 +1,10 @@
 // Gère l'ensemble des player
 // Ce singleton permet de regrouper les info liée aux joueurs
 import { Player, PlayerSummary } from '../models';
-import { getCurrentQuestionOrNull, getScore } from './game';
+import { getCurrentQuestionOrNull, getScore, showAnswer$ } from './game';
 import { logger } from '../logger';
+import { BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 // ATTENTION cette données est mutable !
 // n'exposer que des clone pour éviter des effet de bord !!
@@ -18,32 +20,32 @@ const players: Player[] = [];
  */
 export function addPlayer(name: string, id: string): boolean {
   const alreadyRegisteredPlayer = players.find(p => p.name === name);
+  let isAvailable: boolean;
 
-  // someone try to use a used name
   if (alreadyRegisteredPlayer && alreadyRegisteredPlayer.isConnected) {
-    return false;
-  }
-
-  // someone try to reconnect
-  if (alreadyRegisteredPlayer && !alreadyRegisteredPlayer.isConnected) {
+    // someone try to use a used name
+    isAvailable = false;
+  } else if (alreadyRegisteredPlayer && !alreadyRegisteredPlayer.isConnected) {
+    // someone try to reconnect
     alreadyRegisteredPlayer.isConnected = true;
     alreadyRegisteredPlayer.id = id;
-    return true;
-  }
-
-  // new player
-  if (!alreadyRegisteredPlayer) {
+    isAvailable = true;
+  } else if (!alreadyRegisteredPlayer) {
+    // new player
     players.push({
       name,
       id,
       isConnected: true,
       answers: [],
     });
-    return true;
+    isAvailable = true;
+  } else {
+    logger.error('should have return something');
+    isAvailable = false;
   }
 
-  logger.error('should have return something');
-  return false;
+  _updatePlayersScore();
+  return isAvailable;
 }
 
 /**
@@ -76,18 +78,7 @@ export function storeAnswer(playerId: string, choiceId: number): void {
     });
   }
   logger.info('Réponse sélectionnée ' + choiceId + ' pour la question ' + questionId + ' par user ' + player.id);
-}
-
-/**
- * Génère un récapitulatif des score
- */
-export function getGameSummary(): PlayerSummary[] {
-  return players.map(p => ({
-    name: p.name,
-    isConnected: p.isConnected,
-    score: getScore(p.answers),
-    currentAnswer: getCurrentAnswer(p),
-  })).sort((a, b) => a.score - b.score);
+  _updatePlayersScore();
 }
 
 function getCurrentAnswer(p: Player): string {
@@ -106,9 +97,35 @@ export function disconnectPlayer(id: string) {
   const player = players.find(p => p.id === id);
   if (player) {
     player.isConnected = false;
+    _updatePlayersScore();
   }
 }
 
 export function getPlayer(id: string): Player {
   return players.find(p => p.id === id);
 }
+
+
+/**
+ * Génère un récapitulatif des scores
+ * @export playersScore$
+ */
+const _playersScore$ = new BehaviorSubject<PlayerSummary[]>(null);
+showAnswer$.subscribe(() => _updatePlayersScore());
+function _updatePlayersScore() {
+  _playersScore$.next(players
+    .map(p => ({
+      name: p.name,
+      isConnected: p.isConnected,
+      score: getScore(p.answers),
+      currentAnswer: getCurrentAnswer(p),
+    }))
+    .sort((a, b) => a.score - b.score)
+  );
+}
+export const playersScore$ = _playersScore$.asObservable().pipe(
+  filter(g => g !== null),
+);
+export const playersScoreSnapshot = function (): PlayerSummary[] {
+  return _playersScore$.getValue();
+};

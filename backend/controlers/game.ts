@@ -4,6 +4,7 @@
 
 import { Answer, Choice, Question } from '../models';
 import { clone } from '../utils/object-utils';
+import { Subject } from 'rxjs';
 
 enum GameSate {
   HAS_NOT_STARTED = 'HAS_NOT_STARTED',
@@ -13,6 +14,13 @@ enum GameSate {
 const jsonOfQuestions: Question[] = require('../resources/questions') || [];
 let showAnswer = false;
 let currentQuestionIndex: number = null;
+
+/**
+ * Permet de signaler à d'autre controller que l'on corrige une quesion
+ * @type {Subject<void>}
+ */
+const _showAnswer$ = new Subject<void>();
+export const showAnswer$ = _showAnswer$.asObservable();
 
 /**
  * retourne la question en cours
@@ -44,7 +52,11 @@ export function getCurrentQuestionOrNull(): Question {
 }
 
 export function getScore(answers: Answer[]): number {
-  return answers.map(a => getChoice(a.questionId, a.choiceId))
+  const currentQuestion = getCurrentQuestionOrNull();
+  return answers
+    // don't take currentQuestion into account for the score if the answer has not been shown
+    .filter(a => showAnswer || !currentQuestion || currentQuestion.id !== a.questionId)
+    .map(a => getChoice(a.questionId, a.choiceId))
     .map(c => +c.isTrue)
     .reduce((total, point) => total + point, 0);
 }
@@ -63,6 +75,7 @@ function getChoice(questionId: number, choiceId): Choice {
  */
 export function getQuestionWithAnswer(): Question | GameSate {
   showAnswer = true;
+  _showAnswer$.next();
   return getCurrentQuestion();
 }
 

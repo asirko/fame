@@ -1,0 +1,16 @@
+
+.players {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.player {
+
+}
+
+.online {
+  color: green;
+}
+.offline {
+  color: red;
+}
