@@ -30,6 +30,12 @@
               "src/styles.scss",
               "node_modules/prismjs/themes/prism-okaidia.css"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles",
+                "src/styles/settings"
+              ]
+            },
             "scripts": [
               "node_modules/marked/lib/marked.js",
               "node_modules/prismjs/prism.js",
