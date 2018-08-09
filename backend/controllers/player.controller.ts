@@ -1,7 +1,7 @@
 import { Player, PlayerSummary } from '../models';
 import { logger } from '../logger';
-import { BehaviorSubject } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter, map, tap } from 'rxjs/operators';
 import { game } from './game.controller';
 
 /**
@@ -126,12 +126,19 @@ class PlayersController {
   }
 
   getPlayer(id: string): Player {
-    return this._players.find(p => p.id === id);
+    return { ...this._players.find(p => p.id === id)};
+  }
+
+  getPlayerScore$(id: string): Observable<PlayerSummary> {
+    return this.playersScore$.pipe(
+      map(list => list.find(p => p.id === id)),
+    );
   }
 
   private _updatePlayersScore() {
     this._playersScore$.next(this._players
       .map(p => ({
+        id: p.id,
         name: p.name,
         isConnected: p.isConnected,
         score: game.getScore(p.answers),
@@ -142,4 +149,4 @@ class PlayersController {
   }
 }
 
-export const players = new PlayersController();
+export const playersController = new PlayersController();

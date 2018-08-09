@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {PlayerService} from '../player.service';
+import { PlayerService } from '../player.service';
 import { Player } from '../player';
 
 @Component({
@@ -15,8 +15,9 @@ export class PlayerHomeComponent implements OnInit {
   constructor(private loginService: PlayerService) { }
 
   ngOnInit() {
+    // TODO ne pas oublier les unsubscribe
     this.loginService.getPlayers$().subscribe(players => this.players = players);
-    this.loginService.getPlayer$().subscribe(player => this.player = player);
+    this.loginService.player$.subscribe(player => this.player = player);
   }
 
 }

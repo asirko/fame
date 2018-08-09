@@ -9,25 +9,22 @@ import { filter } from 'rxjs/operators';
 })
 export class PlayerService {
 
-  private socket = SocketIOClient('/player');
-  private player$ = new BehaviorSubject<Player>(null);
+  private _socket = SocketIOClient('/player');
+  private _player$ = new BehaviorSubject<Player>(null);
+  readonly player$ = this._player$.asObservable();
   private _allPlayers$ = new BehaviorSubject<Player[]>(null);
-  readonly allPlayers$: Observable<Player[]>;
+  readonly allPlayers$: Observable<Player[]> = this._allPlayers$.asObservable().pipe(filter(v => v !== null));
 
   constructor() {
-    this.socket.on('allPlayers', playersSummary => {
-      this._allPlayers$.next(playersSummary);
-    });
-    this.allPlayers$ = this._allPlayers$.asObservable().pipe(
-      filter(v => v !== null),
-    );
+    this._socket.emit('initAllPlayers', null, playersSummary => this._allPlayers$.next(playersSummary));
+    this._socket.on('allPlayers', playersSummary => this._allPlayers$.next(playersSummary));
   }
 
   addPlayer(playerName: string): Observable<boolean> {
     return new Observable(observer => {
-      this.socket.emit('addPlayer', playerName, isOk => {
+      this._socket.emit('addPlayer', playerName, isOk => {
         if (isOk) {
-          this.player$.next({name: playerName, score: 0, isConnected: true});
+          this._player$.next({name: playerName, score: 0, isConnected: true});
         }
         observer.next(isOk);
         observer.complete();
@@ -37,19 +34,15 @@ export class PlayerService {
 
   getPlayers$(): Observable<any[]> {
     return new Observable(observer => {
-      this.socket.on('allPlayers', players => {
+      this._socket.on('allPlayers', players => {
         players.forEach(p => p.date = p.date && new Date(p.date));
         observer.next(players);
       });
     });
   }
 
-  getPlayer$(): Observable<Player> {
-    return this.player$.asObservable();
-  }
-
   storeAnswer(choiceId: number): void {
-    this.socket.emit('storeAnswer', choiceId);
+    this._socket.emit('storeAnswer', choiceId);
   }
 
 }

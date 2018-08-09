@@ -6,6 +6,7 @@ export class Player {
 }
 
 export class PlayerSummary {
+  id: string;
   name: string;
   isConnected: boolean;
   score: number;
