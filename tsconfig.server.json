@@ -3,10 +3,13 @@
     "module": "commonjs",
     "esModuleInterop": false,
     "target": "es6",
+    "types": ["reflect-metadata"],
     "noImplicitAny": false,
     "moduleResolution": "node",
     "sourceMap": false,
     "outDir": "dist/backend",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "baseUrl": ".",
     "paths": {
       "*": [

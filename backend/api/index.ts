@@ -1,14 +1,18 @@
 import { Server } from 'socket.io';
-import { manageGame } from './game.api';
-import { initPlayerNamespace } from './player.api';
-import { logger } from '../logger';
+import { Api } from '../utils/di';
+import { PlayerAPI } from './player.api';
+import { GameAPI } from './game.api';
 
-export function initAllSocketsAPI (io: Server): void {
+@Api()
+export class Apis {
 
-  logger.info('create namespace player');
-  initPlayerNamespace(io.of('/player'));
+  constructor (
+    private playerAPI: PlayerAPI,
+    private gameAPI: GameAPI,
+  ) {}
 
-  logger.info('create namespace game');
-  io.of('/game').on('connection', manageGame);
-
+  initAllSocketsAPI (io: Server): void {
+    this.playerAPI.initNamespace(io, 'player');
+    this.gameAPI.initNamespace(io, 'game');
+  }
 }
