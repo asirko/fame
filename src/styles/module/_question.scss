@@ -1,0 +1,37 @@
+@import "projectColors";
+
+.q-title,
+.q-sentence {
+  text-align: center;
+}
+
+.q-choices{
+  display: flex;
+  flex-direction: column;
+  margin: 10px -10px;
+}
+
+.q-choice {
+  padding: 15px 20px;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  margin: 10px;
+  text-align: center;
+  list-style: none;
+  outline: none;
+  background-color: $color-primary-lighter;
+  cursor: pointer;
+
+  &.is-selected {
+    border-color: $color-secondary-light;
+    color: $color-secondary-light;
+  }
+  .is-answered &.is-selected:not(.is-true) {
+    border-color: $color-secondary;
+    color: $color-secondary;
+  }
+  .is-answered &.is-true {
+    border-color: $color-success;
+    color: $color-success;
+  }
+}

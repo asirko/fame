@@ -1,20 +1,16 @@
-<h1>Quiz</h1>
 
-<div *ngIf="currentQuestion" class="quiz">
-  <markdown class="question" [data]="currentQuestion.questionLabel"></markdown>
+<div class="q" *ngIf="currentQuestion$ | async as question">
+  <h1 class="q-title">Quiz</h1>
 
-  <ul class="choices">
-    <li *ngFor="let choice of currentQuestion.choices"
-      class="choice"
-      [ngClass]="{'selected': choice.isSelected}"
-      (click)="selectAnswer(choice)">
+  <markdown class="q-sentence" [data]="question.questionLabel"></markdown>
+
+  <ul class="q-choices" [ngClass]="{'is-answered': question.hasAnswer}">
+    <li *ngFor="let choice of question.choices"
+        class="q-choice"
+        [ngClass]="{'is-selected': choiceSelected === choice.id, 'is-true': choice.isTrue}"
+        (click)="selectAnswer(question, choice)">
       {{ choice.label }}
     </li>
   </ul>
-
-  <div *ngIf="isCorrection && choiceSelected">
-    <span *ngIf="isRight" class="correction-right">Bonne réponse!</span>
-    <span *ngIf="!isRight" class="correction-wrong">Mauvaise réponse</span>
-  </div>
 
 </div>

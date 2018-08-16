@@ -23,6 +23,7 @@ export class PlayerService {
   addPlayer(playerName: string): Observable<boolean> {
     return new Observable(observer => {
       this._socket.emit('addPlayer', playerName, isOk => {
+        console.log(isOk);
         if (isOk) {
           this._player$.next({name: playerName, score: 0, isConnected: true});
         }
