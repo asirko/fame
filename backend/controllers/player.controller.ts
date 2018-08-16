@@ -2,13 +2,15 @@ import { Player, PlayerSummary } from '../models';
 import { logger } from '../logger';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
-import { game } from './game.controller';
+import { Service } from '../utils/di';
+import { GameController } from './game.controller';
 
 /**
  * Gère l'ensemble des players
  * Ce singleton permet de regrouper les info liée aux joueurs
  */
-class PlayersController {
+@Service()
+export class PlayersController {
 
   // ATTENTION cette données est mutable !
   // n'exposer que des clone pour éviter des effet de bord !!
@@ -26,9 +28,11 @@ class PlayersController {
     return this._playersScore$.getValue();
   }
 
-  constructor() {
+  constructor(
+    private game: GameController,
+  ) {
     // met à jour les score à chaque fois que l'admin décide de montrer la solution
-    game.showAnswer$.pipe(
+    this.game.showAnswer$.pipe(
       filter(bool => bool),
       tap(() => this._updatePlayersScore()),
     ).subscribe();
@@ -84,7 +88,7 @@ class PlayersController {
       return;
     }
 
-    const currentQuestion = game.getCurrentQuestionOrNull();
+    const currentQuestion = this.game.getCurrentQuestionOrNull();
     if (!currentQuestion) {
       logger.error('Tentative de réponse alors qu\'il n\'y a pas de question en cours.');
       return;
@@ -106,7 +110,7 @@ class PlayersController {
   }
 
   private getCurrentAnswer(p: Player): string {
-    const currentQuestion = game.getCurrentQuestionOrNull();
+    const currentQuestion = this.game.getCurrentQuestionOrNull();
     if (!currentQuestion) {
       return '';
     }
@@ -141,12 +145,10 @@ class PlayersController {
         id: p.id,
         name: p.name,
         isConnected: p.isConnected,
-        score: game.getScore(p.answers),
+        score: this.game.getScore(p.answers),
         currentAnswer: this.getCurrentAnswer(p),
       }))
       .sort((a, b) => a.score - b.score)
     );
   }
 }
-
-export const playersController = new PlayersController();

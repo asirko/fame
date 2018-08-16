@@ -1,6 +1,7 @@
 import { Answer, Choice, Question } from '../models';
 import { clone } from '../utils/object-utils';
 import { BehaviorSubject } from 'rxjs';
+import { Service } from '../utils/di';
 
 enum GameSate {
   HAS_NOT_STARTED = 'HAS_NOT_STARTED',
@@ -12,7 +13,8 @@ enum GameSate {
  * Ce singleton permet d'assurer que tout le monde se base sur
  * la même information.
  */
-class GameController {
+@Service()
+export class GameController {
 
   private readonly _jsonOfQuestions: Question[] = require('../resources/questions') || [];
   private _currentQuestionIndex: number = null;
@@ -95,5 +97,3 @@ class GameController {
   }
 
 }
-
-export const game = new GameController();
