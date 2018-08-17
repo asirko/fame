@@ -1,13 +1,9 @@
 // Settings
-@import './styles/settings/colors';
+@import 'styles/settings/projectColors';
 
-html{
-    background-image: linear-gradient($color-gradient-1, $color-gradient-2);
-    body{
-        box-sizing: border-box;
-        background-image: linear-gradient(-45deg, transparent, rgba($color-gradient-3, .65));
-        margin: 0;
-        padding: 0;
-        
-    }
-}
+// General
+@import "styles/reset";
+@import "styles/layout";
+
+// Specific module
+@import "styles/module/question";

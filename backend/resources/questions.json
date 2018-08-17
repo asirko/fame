@@ -1,7 +1,7 @@
 [
   {
     "id": 0,
-    "questionLabel": "Qui a écris cette ligne de code\u00A0: \n\n```typescript\nconst player = players.find(p => p.id === playerId);\n```",
+    "questionLabel": "Selon vous, qui a écris cette ligne de code\u00A0: \n\n```typescript\nconst player = players\n\u00A0\u00A0.find(p => p.id === playerId);\n```",
     "choices": [
       {
         "id": 0,
