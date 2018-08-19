@@ -1,7 +1,7 @@
-import { AdminService } from './../../admin/admin.service';
+import { AdminService } from '../../admin/admin.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '../../../../node_modules/@angular/router';
-import { filter, first, tap } from '../../../../node_modules/rxjs/operators';
+import { Router } from '@angular/router';
+import { filter, first, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'fame-waiting-room',

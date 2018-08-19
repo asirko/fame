@@ -1,16 +1,10 @@
 export class Player {
-  id: string; // will be the player socket id
-  name: string;
-  isConnected: boolean;
-  answers: Answer[];
-}
-
-export class PlayerSummary {
   id: string;
   name: string;
-  isConnected: boolean;
   score: number;
+  isConnected: boolean;
   currentAnswer?: string;
+  answers: Answer[];
 }
 
 export class Answer {

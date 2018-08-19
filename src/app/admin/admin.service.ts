@@ -1,49 +1,31 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import * as SocketIOClient from 'socket.io-client';
-import { GameState, Question } from '../question';
-import { filter, map } from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
+import { Game, Question } from '../../../shared/models';
+import { GameEvent, gameNamespaceName } from '../../../shared/api.const';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
-  private _socket = SocketIOClient('/game');
-  private _currentQuestion$ = new BehaviorSubject<Question | GameState>(null);
+  private _socket = SocketIOClient('/' + gameNamespaceName);
+  private _currentQuestion$ = new BehaviorSubject<Question>(undefined);
+  readonly currentQuestion$ = this._currentQuestion$.asObservable()
+    .pipe(filter(q => q !== undefined));
 
-  // the first is skipped because behaviorSubject have an initial value;
-  readonly hasNotStarted$: Observable<boolean>;
-  readonly currentQuestion$: Observable<Question>;
-  readonly hasFinished$: Observable<boolean>;
+  private _game$ = new BehaviorSubject<Game>(undefined);
+  readonly game$ = this._game$.asObservable()
+    .pipe(filter(g => g !== undefined));
 
   constructor() {
-    /**
-     * get the current question of the game
-     * before to start and after it ends its hold a GameState
-     * and a question otherwise
-     * those values are cleaned up for the public API
-     */
-    this._socket.on('currentQuestion', question => {
-      this._currentQuestion$.next(question);
-    });
-
-    const onlyValues = this._currentQuestion$.asObservable().pipe(
-      filter(v => v !== null),
-    );
-    this.hasNotStarted$ = onlyValues.pipe(
-      map(q => q === GameState.NOT_STARTED),
-    );
-    this.currentQuestion$ = onlyValues.pipe(
-      map(q => q === GameState.NOT_STARTED || q === GameState.FINISHED ? null : q),
-    );
-    this.hasFinished$ = onlyValues.pipe(
-      map(q => q === GameState.FINISHED),
-    );
+    this._socket.on(GameEvent.CURRENT_QUESTION, question => this._currentQuestion$.next(question));
+    this._socket.on(GameEvent.GAME, game => this._game$.next(game));
   }
 
   nextQuestion$(): Observable<void> {
     return new Observable(observer => {
-      this._socket.emit('nextQuestion', null, () => {
+      this._socket.emit(GameEvent.NEXT_QUESTION, null, () => {
         observer.next();
         observer.complete();
       });
@@ -52,15 +34,10 @@ export class AdminService {
 
   showAnswer$(): Observable<void> {
     return new Observable(observer => {
-      if (this._currentQuestion$.getValue() !== undefined) {
-        this._socket.emit('showAnswer', null, () => {
-          observer.next();
-          observer.complete();
-        });
-      } else {
+      this._socket.emit(GameEvent.SHOW_ANSWER, null, () => {
         observer.next();
         observer.complete();
-      }
+      });
     });
   }
 

@@ -1,1 +1,6 @@
 <router-outlet></router-outlet>
+
+<div *ngIf="player$ | async as player">
+  {{ player.name }}
+  ({{ player.score }})
+</div>

@@ -1,99 +1,110 @@
-import { Answer, Choice, Question } from '../models';
-import { clone } from '../utils/object-utils';
+import { Answer, Choice, Game, GameState, Question } from '../../shared/models';
 import { BehaviorSubject } from 'rxjs';
-import { Service } from '../utils/di';
-
-enum GameSate {
-  HAS_NOT_STARTED = 'HAS_NOT_STARTED',
-  FINISHED = 'FINISHED',
-}
+import { Controller } from '../utils/di';
+import { logger } from '../logger';
+import { map } from 'rxjs/operators';
+import { clone } from '../utils/object-utils';
 
 /**
  * Gère l'état d'avancement de la partie
  * Ce singleton permet d'assurer que tout le monde se base sur
  * la même information.
  */
-@Service()
+@Controller()
 export class GameController {
 
-  private readonly _jsonOfQuestions: Question[] = require('../resources/questions') || [];
-  private _currentQuestionIndex: number = null;
+  private readonly questions: Question[] = readQuestionFile('../resources/questions');
 
-  // Permet de signaler à d'autre controller que l'on corrige une quesion
-  private _showAnswer$ = new BehaviorSubject<boolean>(false);
-  showAnswer$ = this._showAnswer$.asObservable();
+  private readonly _game$ = new BehaviorSubject<Game>({
+    nbQuestions: this.questions.length,
+    state: GameState.NOT_STARTED,
+    currentQuestionIndex: null,
+    showCurrentAnswer: false,
+  });
+  readonly game$ = this._game$.asObservable();
+  get gameSnapshot(): Game {
+    return { ...this._game$.getValue() };
+  }
+
+  currentQuestion$ = this.game$.pipe(
+    map(game => this.extractQuestionFromGame(game)),
+  );
+  get currentQuestionSnapshot(): Question {
+    return this.extractQuestionFromGame(this.gameSnapshot);
+  }
 
   constructor() {}
 
-  /**
-   * retourne la question en cours
-   * @returns {Question | GameSate}
-   */
-  getCurrentQuestion(): Question | GameSate {
-    if (this._currentQuestionIndex === null) {
-      return GameSate.HAS_NOT_STARTED;
-    } else if (this._currentQuestionIndex >= this._jsonOfQuestions.length) {
-      return GameSate.FINISHED;
-    }
-
-    const cloneQuestion = clone<Question>(this._jsonOfQuestions[this._currentQuestionIndex]);
-    cloneQuestion.hasAnswer = this._showAnswer$.getValue();
-    if (!cloneQuestion.hasAnswer) {
-      cloneQuestion.choices.forEach(a => delete a.isTrue);
-    }
-    return cloneQuestion;
-  }
-
-  getCurrentQuestionOrNull(): Question {
-    const currentQuestion = this.getCurrentQuestion();
-    const gameStates = Object.keys(GameSate).map(k => GameSate[k]);
-    const isAGameState = gameStates.indexOf(currentQuestion) !== -1;
-    if (isAGameState) {
-      return null;
-    }
-    return <Question>currentQuestion;
-  }
-
-  getScore(answers: Answer[]): number {
-    const currentQuestion = this.getCurrentQuestionOrNull();
+  getScoreForAnswers(answers: Answer[]): number {
+    const game = this.gameSnapshot;
+    const currentQuestion = this.questions[game.currentQuestionIndex];
     return answers
-    // don't take currentQuestion into account for the score if the answer has not been shown
-      .filter(a => this._showAnswer$.getValue() || !currentQuestion || currentQuestion.id !== a.questionId)
+      // don't take currentQuestion into account for the score if the answer has not been shown
+      .filter(a => game.showCurrentAnswer || !currentQuestion || currentQuestion.id !== a.questionId)
       .map(a => this.getChoice(a.questionId, a.choiceId))
       .map(c => +c.isTrue)
       .reduce((total, point) => total + point, 0);
   }
 
   private getChoice(questionId: number, choiceId): Choice {
-    return this._jsonOfQuestions
+    return this.questions
       .find(q => q.id === questionId)
       .choices
       .find(c => c.id === choiceId);
   }
 
   /**
-   * active l'affichage de la réponse et renvoie la question courante
-   * Cette question a donc maintenant les réponses
-   * @returns {Question | GameSate}
+   * active l'affichage de la réponse
+   * La question courante a donc maintenant les réponses
    */
-  getQuestionWithAnswer(): Question | GameSate {
-    this._showAnswer$.next(true);
-    return this.getCurrentQuestion();
+  showAnswer(): void {
+    this._game$.next({
+      ...this._game$.getValue(),
+      showCurrentAnswer: true,
+    });
   }
 
   /**
    * passe à la question suivante
-   * et renvoie la nouvelle question courante
-   * @returns {Question | GameSate}
    */
-  nextQuestion(): Question | GameSate {
-    if (this._currentQuestionIndex === null) {
-      this._currentQuestionIndex = 0;
-    } else {
-      this._currentQuestionIndex++;
-    }
-    this._showAnswer$.next(false);
-    return this.getCurrentQuestion();
+  nextQuestion(): void {
+    const game = this._game$.getValue();
+    const nextIndex = game.currentQuestionIndex === null ? 0 : game.currentQuestionIndex + 1;
+    const nextGameState = nextIndex >= game.nbQuestions ? GameState.FINISHED : GameState.ON_GOING;
+    this._game$.next({
+      ...game,
+      currentQuestionIndex: nextIndex,
+      state: nextGameState,
+      showCurrentAnswer: false,
+    });
   }
 
+  private extractQuestionFromGame(game: Game): Question {
+    if (game.currentQuestionIndex === null || game.state !== GameState.ON_GOING) {
+      return null;
+    }
+    const question = this.questions[game.currentQuestionIndex];
+    if (!question) {
+      logger.error('current game state refer to a question that does not exist');
+      return null;
+    }
+
+    // remove answer if the question is still unanswered
+    const cloneQuestion = clone<Question>(question);
+    cloneQuestion.hasAnswer = game.showCurrentAnswer;
+    if (!cloneQuestion.hasAnswer) {
+      cloneQuestion.choices.forEach(a => delete a.isTrue);
+    }
+    return cloneQuestion;
+
+  }
+
+}
+
+function readQuestionFile(path: string): Question[] {
+  const questions = <Question[]>require(path);
+  if (!questions || !questions.length) {
+    logger.error('Question file is invalid, no question');
+  }
+  return questions || [];
 }

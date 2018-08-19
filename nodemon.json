@@ -1,5 +1,5 @@
 {
-  "watch": ["backend"],
+  "watch": ["backend", "shared"],
   "ext": "ts",
   "exec": "npm run ts-node ./backend"
 }

@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AdminService } from './admin.service';
-import { combineLatest, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { distinctUntilChanged, map, takeUntil, tap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlayerService } from '../player/player.service';
+import { GameState } from '../../../shared/models';
 
 @Component({
   selector: 'fame-admin',
@@ -12,8 +13,6 @@ import { PlayerService } from '../player/player.service';
 })
 export class AdminComponent implements OnInit, OnDestroy {
 
-  private isNotStarted$ = this.adminService.hasNotStarted$;
-  private hasFinished$ = this.adminService.hasFinished$;
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -24,22 +23,19 @@ export class AdminComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-
-    this.playerService.allPlayers$.subscribe(console.log);
-
-    combineLatest(this.isNotStarted$, this.hasFinished$).pipe(
+    this.adminService.game$.pipe(
       takeUntil(this.destroy$),
-      map(([before, after]) => (-before) + (+after)), // -1 before, 0 into, 1 after
+      map(g => g.state),
       distinctUntilChanged(),
-      tap(whereToGo => {
-        switch (whereToGo) {
-          case -1:
+      tap(gameState => {
+        switch (gameState) {
+          case GameState.NOT_STARTED:
             this.router.navigate(['before-start'], { relativeTo: this.route});
             break;
-          case 0:
+          case GameState.ON_GOING:
             this.router.navigate(['control-game'], { relativeTo: this.route});
             break;
-          case 1:
+          case GameState.FINISHED:
             this.router.navigate(['results'], { relativeTo: this.route});
             break;
         }

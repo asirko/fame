@@ -20,7 +20,7 @@ export class LoginAdminComponent implements OnInit {
   }
 
   login(): void {
-    console.log('TODO: attente socket AS');
+    // TODO: attente socket AS
   }
 
 }

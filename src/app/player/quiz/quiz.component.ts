@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../admin/admin.service';
 import { PlayerService } from '../player.service';
-import { Choice, Question } from '../../question';
+import { Choice, Question } from '../../../../shared/models';
 
 @Component({
   selector: 'fame-quiz',

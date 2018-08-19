@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerService } from '../player.service';
-import { Player } from '../player';
 
 @Component({
   selector: 'fame-player-home',
@@ -9,15 +8,13 @@ import { Player } from '../player';
 })
 export class PlayerHomeComponent implements OnInit {
 
-  players: Player[];
-  player: Player;
+  players$ = this.loginService.allPlayers$;
+  player$ = this.loginService.myself$;
 
-  constructor(private loginService: PlayerService) { }
+  constructor(
+    private loginService: PlayerService,
+  ) { }
 
-  ngOnInit() {
-    // TODO ne pas oublier les unsubscribe
-    this.loginService.getPlayers$().subscribe(players => this.players = players);
-    this.loginService.player$.subscribe(player => this.player = player);
-  }
+  ngOnInit() {}
 
 }

@@ -1,15 +1,15 @@
-import { Player, PlayerSummary } from '../models';
+import { Player } from '../../shared/models';
 import { logger } from '../logger';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
-import { Service } from '../utils/di';
+import { Controller } from '../utils/di';
 import { GameController } from './game.controller';
 
 /**
  * Gère l'ensemble des players
  * Ce singleton permet de regrouper les info liée aux joueurs
  */
-@Service()
+@Controller()
 export class PlayersController {
 
   // ATTENTION cette données est mutable !
@@ -19,21 +19,21 @@ export class PlayersController {
   /**
    * Génère un récapitulatif des scores
    */
-  private _playersScore$ = new BehaviorSubject<PlayerSummary[]>(null);
+  private _playersScore$ = new BehaviorSubject<Player[]>(null);
 
   readonly playersScore$ = this._playersScore$.asObservable()
     .pipe(filter(g => g !== null));
 
-  get playersScoreSnapshot(): PlayerSummary[] {
+  get playersScoreSnapshot(): Player[] {
     return this._playersScore$.getValue();
   }
 
   constructor(
-    private game: GameController,
+    private gameController: GameController,
   ) {
     // met à jour les score à chaque fois que l'admin décide de montrer la solution
-    this.game.showAnswer$.pipe(
-      filter(bool => bool),
+    this.gameController.game$.pipe(
+      filter(g => g.showCurrentAnswer),
       tap(() => this._updatePlayersScore()),
     ).subscribe();
   }
@@ -63,6 +63,7 @@ export class PlayersController {
       this._players.push({
         name,
         id,
+        score: 0,
         isConnected: true,
         answers: [],
       });
@@ -88,7 +89,7 @@ export class PlayersController {
       return;
     }
 
-    const currentQuestion = this.game.getCurrentQuestionOrNull();
+    const currentQuestion = this.gameController.currentQuestionSnapshot;
     if (!currentQuestion) {
       logger.error('Tentative de réponse alors qu\'il n\'y a pas de question en cours.');
       return;
@@ -106,19 +107,8 @@ export class PlayersController {
       });
     }
     logger.info('Réponse sélectionnée ' + choiceId + ' pour la question ' + questionId + ' par user ' + player.id);
-    this._updatePlayersScore();
-  }
 
-  private getCurrentAnswer(p: Player): string {
-    const currentQuestion = this.game.getCurrentQuestionOrNull();
-    if (!currentQuestion) {
-      return '';
-    }
-    const currentAnswer = p.answers.find(a => a.questionId === currentQuestion.id);
-    if (!currentAnswer) {
-      return '';
-    }
-    return currentQuestion.choices.find(c => c.id === currentAnswer.choiceId).label;
+    this._updatePlayersScore();
   }
 
   disconnectPlayer(id: string) {
@@ -133,22 +123,20 @@ export class PlayersController {
     return { ...this._players.find(p => p.id === id)};
   }
 
-  getPlayerScore$(id: string): Observable<PlayerSummary> {
+  getPlayerScore$(id: string): Observable<Player> {
     return this.playersScore$.pipe(
       map(list => list.find(p => p.id === id)),
     );
   }
 
   private _updatePlayersScore() {
-    this._playersScore$.next(this._players
+    const newPlayersState = this._players
       .map(p => ({
-        id: p.id,
-        name: p.name,
-        isConnected: p.isConnected,
-        score: this.game.getScore(p.answers),
-        currentAnswer: this.getCurrentAnswer(p),
+        ...p,
+        score: this.gameController.getScoreForAnswers(p.answers),
       }))
-      .sort((a, b) => a.score - b.score)
-    );
+      .sort((a, b) => a.score - b.score);
+
+    this._playersScore$.next(newPlayersState);
   }
 }

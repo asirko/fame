@@ -15,7 +15,7 @@ type GenericClassDecorator<T> = (target: T) => void;
  * Permet l'injection de dépendence par type dans un le constructeur de la classe décoré
  * Si une class n'est pas décorée, elle n'a pas de meta données
  */
-export const Service = (): GenericClassDecorator<Type<object>> => {
+export const Controller = (): GenericClassDecorator<Type<object>> => {
   return (target: Type<object>) => {};
 };
 
