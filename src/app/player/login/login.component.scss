@@ -1,6 +1,26 @@
+@import 'palette';
+//
 .login {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 100%;
+    .l-background {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        .l-background-circle-1, .l-background-circle-2, .l-background-circle-3 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid;
+            &.l-background-circle-1{
+                border-color: $color-purple-1;
+                width: 500px;
+                height: 500px;
+                border-radius: 50%;
+            }
+        }
+    }
 }
