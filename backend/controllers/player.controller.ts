@@ -55,9 +55,17 @@ export class PlayersController {
    */
   addPlayer(name: string, id: string): boolean {
     const alreadyRegisteredPlayer = this._players.find(p => p.name === name);
+    const currentPlayer = this._players.find(p => p.id === id);
     let isAvailable: boolean;
 
-    if (alreadyRegisteredPlayer && alreadyRegisteredPlayer.isConnected) {
+    if (currentPlayer && (!alreadyRegisteredPlayer || alreadyRegisteredPlayer.id === id)) {
+      // the player change it's own name
+      currentPlayer.name = name;
+      isAvailable = true;
+    } else if (currentPlayer && alreadyRegisteredPlayer && alreadyRegisteredPlayer.id !== id) {
+      // the player change it's own name for an unavailable name +> rejected !
+      isAvailable = false;
+    } else if (alreadyRegisteredPlayer && alreadyRegisteredPlayer.isConnected) {
       // someone try to use a used name
       isAvailable = false;
     } else if (alreadyRegisteredPlayer && !alreadyRegisteredPlayer.isConnected) {

@@ -4,7 +4,7 @@
       <label>Nom joueur</label>
       <input id="name" type="text" formControlName="name">
     </div>
-    <button type="submit">Rejoindre la partie</button>
+    <button type="submit" [disabled]="!loginForm.valid">Rejoindre la partie</button>
   </form>
 
   <div *ngIf="isLoginUsed">Pseudo déjà utilisé</div>
