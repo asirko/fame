@@ -8,7 +8,7 @@
     "start:back": "nodenv --env backend/.env --exec nodemon",
     "build": "npm run build:back && npm run build:front",
     "build:front": "ng build --prod",
-    "prebuild:back": "rimraf ./dist/backend/",
+    "prebuild:back": "rimraf ./dist/backend/ && rimraf ./dist/shared/",
     "build:back": "tsc -p tsconfig.server.json",
     "postbuild:back": "cpy backend/resources dist/backend/resources",
     "test": "ng test",
