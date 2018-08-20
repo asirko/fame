@@ -11,6 +11,7 @@ import { Choice, Question } from '../../../../shared/models';
 export class QuizComponent implements OnInit {
 
   readonly currentQuestion$ = this.adminService.currentQuestion$;
+  readonly game$ = this.adminService.game$;
   choiceSelected: number = null;
 
   constructor(

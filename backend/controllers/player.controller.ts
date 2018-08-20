@@ -1,7 +1,7 @@
 import { Player } from '../../shared/models';
 import { logger } from '../logger';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, tap } from 'rxjs/operators';
 import { Controller } from '../utils/di';
 import { GameController } from './game.controller';
 
@@ -13,7 +13,7 @@ import { GameController } from './game.controller';
 export class PlayersController {
 
   // ATTENTION cette données est mutable !
-  // n'exposer que des clone pour éviter des effet de bord !!
+  // n'exposer que des clones pour éviter des effets de bord !!
   private readonly _players: Player[] = [];
 
   /**
@@ -34,6 +34,13 @@ export class PlayersController {
     // met à jour les score à chaque fois que l'admin décide de montrer la solution
     this.gameController.game$.pipe(
       filter(g => g.showCurrentAnswer),
+      tap(() => this._updatePlayersScore()),
+    ).subscribe();
+
+    // remove currentAnswer from all players
+    this.gameController.game$.pipe(
+      map(g => g.currentQuestionIndex),
+      distinctUntilChanged(),
       tap(() => this._updatePlayersScore()),
     ).subscribe();
   }
@@ -134,6 +141,7 @@ export class PlayersController {
       .map(p => ({
         ...p,
         score: this.gameController.getScoreForAnswers(p.answers),
+        currentAnswer: this.gameController.getCurrentAnswerLabel(p.answers),
       }))
       .sort((a, b) => a.score - b.score);
 

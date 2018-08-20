@@ -35,6 +35,18 @@ export class GameController {
 
   constructor() {}
 
+  getCurrentAnswerLabel(answers: Answer[]): string {
+    const game = this.gameSnapshot;
+    const currentQuestion = this.questions[game.currentQuestionIndex];
+    const currentAnswer = answers.find(a => a.questionId === currentQuestion.id);
+    if (!currentAnswer) {
+      return '';
+    }
+
+    const choice = currentQuestion.choices.find(c => c.id === currentAnswer.choiceId);
+    return choice && choice.label;
+  }
+
   getScoreForAnswers(answers: Answer[]): number {
     const game = this.gameSnapshot;
     const currentQuestion = this.questions[game.currentQuestionIndex];

@@ -1,6 +1,7 @@
 
 <div class="q" *ngIf="currentQuestion$ | async as question">
   <h1 class="q-title">Quiz</h1>
+  <h2 class="q-subtitle" *ngIf="game$ | async as game">{{ game.currentQuestionIndex + 1 }} / {{ game.nbQuestions }}</h2>
 
   <markdown class="q-sentence" [data]="question.questionLabel"></markdown>
 

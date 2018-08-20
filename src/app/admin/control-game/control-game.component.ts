@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
+import { PlayerService } from '../../player/player.service';
 
 @Component({
   selector: 'fame-control-game',
@@ -9,9 +10,11 @@ import { AdminService } from '../admin.service';
 export class ControlGameComponent implements OnInit {
 
   readonly currentQuestion$ = this.adminService.currentQuestion$;
+  readonly allPlayers$ = this.playerService.allPlayers$;
 
   constructor(
     private adminService: AdminService,
+    private playerService: PlayerService,
   ) { }
 
   ngOnInit() {}

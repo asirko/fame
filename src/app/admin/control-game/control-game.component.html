@@ -14,3 +14,16 @@
     </ul>
   </div>
 </div>
+
+<table>
+  <tr>
+    <th>Joueur</th>
+    <th>Score</th>
+    <th>Dernière réponse</th>
+  </tr>
+  <tr *ngFor="let player of allPlayers$ | async" [ngClass]="{ 'is-connectec': player.isConnected }">
+    <td>{{ player.name }}</td>
+    <td>{{ player.score }}</td>
+    <td>{{ player.currentAnswer }}</td>
+  </tr>
+</table>
