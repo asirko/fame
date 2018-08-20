@@ -1,12 +1,9 @@
-<div class="login">
-  <form [formGroup]="loginForm" novalidate (ngSubmit)="login()">
-    <div class="form-group">
-      <label>Nom joueur</label>
-      <input id="name" type="text" formControlName="name">
-    </div>
-    <button type="submit">Rejoindre la partie</button>
-  </form>
+<form [formGroup]="loginForm" novalidate (ngSubmit)="login()">
+  <div class="form-group">
+    <label>Nom joueur</label>
+    <input id="name" type="text" formControlName="name">
+  </div>
+  <button type="submit">Rejoindre la partie</button>
+</form>
 
-  <div *ngIf="isLoginUsed">Pseudo déjà utilisé</div>
-
-</div>
+<div *ngIf="isLoginUsed">Pseudo déjà utilisé</div>
