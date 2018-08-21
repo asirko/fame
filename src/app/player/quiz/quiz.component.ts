@@ -67,6 +67,13 @@ export class QuizComponent implements OnInit, OnDestroy {
       first(),
       tap(() => this.offset = 0),
     ).subscribe();
+
+    // reset choice at each new question
+    this.currentQuestion$.pipe(
+      filter(q => !q.hasAnswer),
+      tap(() => this.choiceSelected = null),
+      takeUntil(this.destroy$),
+    ).subscribe();
   }
 
   ngOnDestroy(): void {
