@@ -9,4 +9,6 @@ export class Game {
   state: GameState;
   currentQuestionIndex: number;
   showCurrentAnswer: boolean;
+
+  serverQuestionStartedAt: Date;
 }

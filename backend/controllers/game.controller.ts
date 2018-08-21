@@ -20,6 +20,7 @@ export class GameController {
     state: GameState.NOT_STARTED,
     currentQuestionIndex: null,
     showCurrentAnswer: false,
+    serverQuestionStartedAt: null,
   });
   readonly game$ = this._game$.asObservable();
   get gameSnapshot(): Game {
@@ -76,6 +77,17 @@ export class GameController {
     });
   }
 
+  getTimerOffset(): number {
+    const game = this._game$.getValue();
+    if (!game.serverQuestionStartedAt) {
+      logger.error('no offset time');
+      return null;
+    }
+    const msStart = game.serverQuestionStartedAt.getTime();
+    const msNow = new Date().getTime();
+    return msNow - msStart;
+  }
+
   /**
    * passe à la question suivante
    */
@@ -83,11 +95,13 @@ export class GameController {
     const game = this._game$.getValue();
     const nextIndex = game.currentQuestionIndex === null ? 0 : game.currentQuestionIndex + 1;
     const nextGameState = nextIndex >= game.nbQuestions ? GameState.FINISHED : GameState.ON_GOING;
+    const nextTimer = nextGameState === GameState.ON_GOING ? new Date() : null;
     this._game$.next({
       ...game,
       currentQuestionIndex: nextIndex,
       state: nextGameState,
       showCurrentAnswer: false,
+      serverQuestionStartedAt: nextTimer,
     });
   }
 
@@ -108,9 +122,7 @@ export class GameController {
       cloneQuestion.choices.forEach(a => delete a.isTrue);
     }
     return cloneQuestion;
-
   }
-
 }
 
 function readQuestionFile(path: string): Question[] {

@@ -41,4 +41,16 @@ export class AdminService {
     });
   }
 
+  timerOffset$(): Observable<number> {
+    return Observable.create(observer => {
+      const requestTime = new Date().getTime();
+      this._socket.emit(GameEvent.TIMER_OFFSET, null, (startedSince: number) => {
+        const responseTime = new Date().getTime();
+        const averageTimeToAnswer = (responseTime - requestTime) / 2;
+        observer.next(startedSince + averageTimeToAnswer);
+        observer.complete();
+      });
+    });
+  }
+
 }

@@ -37,6 +37,11 @@ export class GameAPI extends GenericAPI {
         this.gameController.nextQuestion();
       });
 
+      socket.on(GameEvent.TIMER_OFFSET, (unused, response: (offset: number) => void) => {
+        logger.info('Request to have timer offset', {socketId: socket.id});
+        response(this.gameController.getTimerOffset());
+      });
+
       socket.on(GameEvent.SHOW_ANSWER, () => {
         logger.info('Request for answer of the current question', {socketId: socket.id});
         this.gameController.showAnswer();
