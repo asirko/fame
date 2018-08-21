@@ -1,0 +1,34 @@
+//
+@font-face {
+    font-family: '911_porscharegular';
+    src: url('/assets/fonts/911porschav3-webfont.woff2') format('woff2'),
+         url('/assets/fonts/911porschav3-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: '911_porscha_condensedCn';
+    src: url('/assets/fonts/911porschav3cond-webfont.woff2') format('woff2'),
+         url('/assets/fonts/911porschav3cond-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'intro_regular';
+    src: url('/assets/fonts/intro-webfont.woff2') format('woff2'),
+         url('/assets/fonts/intro-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+//
+// Font-family
+$font-title: 'intro_regular';
+$font-fame: '911_porscharegular';
+$font-fame-cond: '911_porscha_condensedCn';
+$font-text: 'Century Gothic', sans-serif;
+
+// Font-weight
+$font-regular: 300;
+$font-semibold: 600; 
+$font-bold: 800;
+$font-black: 900;

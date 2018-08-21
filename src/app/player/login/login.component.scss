@@ -1,25 +1,84 @@
 @import 'palette';
+@import 'fonts';
 //
 .login {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    //display: flex;
+    //align-items: center;
+    //justify-content: center;
     height: 100%;
     .l-background {
         height: 100%;
         width: 100%;
         overflow: hidden;
-        .l-background-circle-1, .l-background-circle-2, .l-background-circle-3 {
+        .l-background-circle-1, .l-background-circle-2, .l-background-circle-3, .l-background-circle-4 {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            border: 2px solid;
-            &.l-background-circle-1{
+            border-style: solid;
+            border-radius: 50%;
+            z-index: 0;
+            &.l-background-circle-1 {
+                border-width: 2px;
                 border-color: $color-purple-1;
-                width: 500px;
-                height: 500px;
-                border-radius: 50%;
+                width: 610px;
+                height: 610px;
+            }
+            &.l-background-circle-2 {
+                border-width: 1px;
+                border-color: rgba($color-purple-2, .3);
+                width: 515px;
+                height: 515px;                
+            }
+            &.l-background-circle-3 {
+                border-width: 2px;
+                border-color: $color-purple-3;
+                width: 325px;
+                height: 325px;                
+            }
+            &.l-background-circle-4 {
+                border-width: 3px;
+                border-color: $color-purple-4;
+                width: 210px;
+                height: 210px;                
+            }
+        }
+    }
+    form {
+        position: relative;
+        height: 100%;
+        z-index: 100;
+        text-align: center;
+        button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 145px;
+            height: 145px;
+            background-image: linear-gradient(-20deg, $color-gradient-2, $color-gradient-1);
+            border: none;
+            border-radius: 50%;
+            outline: none !important;
+            color: #fff;
+            font-family: $font-fame;
+        }
+        .form-group{
+            position: absolute;
+            left: 50%;
+            bottom: 10%;
+            transform: translateX(-50%);
+            input {
+                width: 230px;
+                height: 28px;
+                background: transparent;
+                border: 2px solid $color-purple-3;
+                border-radius: 50px;
+                color: $color-purple-3;
+                text-align: center;
+                padding: 5px 15px;
+                font-family: $font-text;
+                outline: none !important;
             }
         }
     }

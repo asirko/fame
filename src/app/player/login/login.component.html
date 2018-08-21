@@ -1,10 +1,10 @@
 <div class="login">
   <form [formGroup]="loginForm" novalidate (ngSubmit)="login()">
+    <button type="submit" [disabled]="!loginForm.valid">Connexion</button>
     <div class="form-group">
-      <label>Nom joueur</label>
-      <input id="name" type="text" formControlName="name">
+      <label></label>
+      <input id="name" type="text" formControlName="name" placeholder="pseudo">
     </div>
-    <button type="submit" [disabled]="!loginForm.valid">Rejoindre la partie</button>
   </form>
 
   <div *ngIf="isLoginUsed">Pseudo déjà utilisé</div>
@@ -15,6 +15,7 @@
     <div class="l-background-circle-1"></div>
     <div class="l-background-circle-2"></div>
     <div class="l-background-circle-3"></div>
+    <div class="l-background-circle-4"></div>
   </div>
 
    -->

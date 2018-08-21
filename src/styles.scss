@@ -1,5 +1,6 @@
 // Settings
 @import 'styles/settings/palette';
+@import 'styles/settings/fonts';
 
 // General
 @import "styles/reset";
@@ -7,3 +8,24 @@
 
 // Specific module
 @import "styles/module/question";
+
+html{
+    height: 100%;
+    background-image: linear-gradient($color-primary, $color-primary-darker);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    overflow: hidden;
+  }
+  
+  body{
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-image: linear-gradient(-45deg, transparent, rgba($color-secondary, .35));
+    background-repeat: no-repeat;
+    background-size: 100%;
+    color: $color-grey-light; 
+    padding: 15px;
+    font-family: $font-text;
+  }
