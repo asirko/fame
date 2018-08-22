@@ -9,6 +9,7 @@ import { PlayerService } from '../../player/player.service';
 })
 export class ControlGameComponent implements OnInit {
 
+  readonly game$ = this.adminService.game$;
   readonly currentQuestion$ = this.adminService.currentQuestion$;
   readonly allPlayers$ = this.playerService.allPlayers$;
 

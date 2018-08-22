@@ -1,18 +1,23 @@
-<div *ngIf="currentQuestion$ | async as currentQuestion">
+
+<div class="q" *ngIf="currentQuestion$ | async as question">
+
 
   <div class="controls">
-    <button *ngIf="currentQuestion.hasAnswer" (click)="next()">Question suivante</button>
-    <button *ngIf="!currentQuestion.hasAnswer" (click)="showAnswer()">Montrer la réponse</button>
+    <button *ngIf="question.hasAnswer" (click)="next()">Question suivante</button>
+    <button *ngIf="!question.hasAnswer" (click)="showAnswer()">Montrer la réponse</button>
   </div>
 
-  <div>
-    <markdown [data]="currentQuestion.questionLabel"></markdown>
-    <ul>
-      <li *ngFor="let choice of currentQuestion.choices">
-        <span [style.color]="choice.isTrue ? 'green' : ''" >{{ choice.label }}</span>
-      </li>
-    </ul>
-  </div>
+  <h1 class="q-title">Question visible</h1>
+  <h2 class="q-subtitle" *ngIf="game$ | async as game">{{ game.currentQuestionIndex + 1 }} / {{ game.nbQuestions }}</h2>
+
+  <markdown class="q-sentence" [data]="question.questionLabel"></markdown>
+
+  <ul class="q-choices is-small" [ngClass]="{'is-answered': question.hasAnswer}">
+    <li *ngFor="let choice of question.choices" class="q-choice" [ngClass]="{'is-true': choice.isTrue}">
+      {{ choice.label }}
+    </li>
+  </ul>
+
 </div>
 
 <table>

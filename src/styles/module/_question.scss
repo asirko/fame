@@ -1,14 +1,25 @@
 @import "palette";
 
 .q-title,
+.q-subtitle,
 .q-sentence {
   text-align: center;
 }
 
-.q-choices{
+.q-sentence {
+  display: block;
+  margin: 10px 0;
+}
+
+.q-choices {
   display: flex;
   flex-direction: column;
   margin: 10px -10px;
+
+  &.is-small {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 }
 
 .q-choice {
@@ -33,5 +44,9 @@
   .is-answered &.is-true {
     border-color: $color-success;
     color: $color-success;
+  }
+
+  .is-small & {
+    width: calc(50% - 25px);
   }
 }
