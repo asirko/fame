@@ -1,7 +1,15 @@
+@import 'palette';
+@import 'fonts';
+//
 :host {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
   height: 100vh;
+}
+
+h1 {
+  font-family: $font-title;
+  letter-spacing: 1px; 
 }

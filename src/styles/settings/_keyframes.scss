@@ -1,0 +1,28 @@
+// Rotation des planètes
+
+@keyframes planetRotation-1 {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360000deg);
+    }
+}
+
+@keyframes planetRotation-3 {
+    from {
+        transform: translate(-50%, -50%) rotate(80deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360000deg);
+    }
+}
+
+@keyframes planetRotation-4 {
+    from {
+        transform: translate(-50%, -50%) rotate(160deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360000deg);
+    }
+}

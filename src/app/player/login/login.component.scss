@@ -7,14 +7,23 @@
     //justify-content: center;
     height: 100%;
     .l-background {
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
+        .l-background-fame {
+            position: absolute;
+            top: 1%;
+            left: 50%;
+            transform: translateX(-50%);
+            p {
+                display: block;
+                font-family: $font-fame-cond;
+                font-size: 1em;
+                color: $color-purple-1;
+                margin: 36px 0;
+            }
+        }
         .l-background-circle-1, .l-background-circle-2, .l-background-circle-3, .l-background-circle-4 {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
             border-style: solid;
             border-radius: 50%;
             z-index: 0;
@@ -23,24 +32,67 @@
                 border-color: $color-purple-1;
                 width: 610px;
                 height: 610px;
+                transform: translate(-50%, -50%) rotate(0deg);
+                animation-name: planetRotation-1;
+                animation-iteration-count: infinite;
+                animation-duration: 100000s;
+                &:after {
+                    content: '';
+                    width: 24px;
+                    height: 24px;
+                    background-color: $color-purple-1;
+                    border-radius: 50%;
+                    position: absolute;
+                    top: 76px;
+                    left: 76px;
+                } 
             }
             &.l-background-circle-2 {
                 border-width: 1px;
                 border-color: rgba($color-purple-2, .3);
                 width: 515px;
-                height: 515px;                
+                height: 515px;
+                transform: translate(-50%, -50%) rotate(0deg);
             }
             &.l-background-circle-3 {
                 border-width: 2px;
                 border-color: $color-purple-3;
                 width: 325px;
-                height: 325px;                
+                height: 325px;
+                transform: translate(-50%, -50%) rotate(80deg);
+                animation-name: planetRotation-3;
+                animation-iteration-count: infinite;
+                animation-duration: 20000s;
+                &:after {
+                    content: '';
+                    width: 32px;
+                    height: 32px;
+                    background-color: $color-purple-3;
+                    border-radius: 50%;
+                    position: absolute;
+                    top: 30px;
+                    left: 30px;
+                }              
             }
             &.l-background-circle-4 {
                 border-width: 3px;
                 border-color: $color-purple-4;
                 width: 210px;
-                height: 210px;                
+                height: 210px;
+                transform: translate(-50%, -50%) rotate(160deg);
+                animation-name: planetRotation-4;
+                animation-iteration-count: infinite;
+                animation-duration: 30000s;
+                &:after {
+                    content: '';
+                    width: 38px;
+                    height: 38px;
+                    background-color: $color-purple-4;
+                    border-radius: 50%;
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                }     
             }
         }
     }
@@ -57,21 +109,26 @@
             width: 145px;
             height: 145px;
             background-image: linear-gradient(-20deg, $color-gradient-2, $color-gradient-1);
+            background-color: transparent;
             border: none;
             border-radius: 50%;
             outline: none !important;
             color: #fff;
             font-family: $font-fame;
+            &:disabled {
+                background-image: none;
+                background-color: rgba($color-purple-2, .3);
+            }
         }
         .form-group{
             position: absolute;
             left: 50%;
-            bottom: 10%;
+            bottom: 16%;
             transform: translateX(-50%);
             input {
                 width: 230px;
                 height: 28px;
-                background: transparent;
+                background: $color-blue-1;
                 border: 2px solid $color-purple-3;
                 border-radius: 50px;
                 color: $color-purple-3;
@@ -79,6 +136,11 @@
                 padding: 5px 15px;
                 font-family: $font-text;
                 outline: none !important;
+                transition: all 1s ease;
+                &:active, &:focus, &:hover {
+                    border: 2px solid $color-white;
+                    transition: all .5s ease;
+                }
             }
         }
     }
