@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
-import { PlayerService } from '../../player/player.service';
 
 @Component({
   selector: 'fame-before-start',
@@ -9,11 +8,8 @@ import { PlayerService } from '../../player/player.service';
 })
 export class BeforeStartComponent implements OnInit {
 
-  players$ = this.playerService.allPlayers$;
-
   constructor(
     private adminService: AdminService,
-    private playerService: PlayerService,
   ) { }
 
   ngOnInit() {

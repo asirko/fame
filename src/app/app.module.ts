@@ -17,6 +17,7 @@ import { BeforeStartComponent } from './admin/before-start/before-start.componen
 import { ControlGameComponent } from './admin/control-game/control-game.component';
 import { ResultsComponent } from './admin/results/results.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { PlayersListComponent } from './shared/players-list/players-list.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MarkdownModule } from 'ngx-markdown';
     WaitingRoomComponent,
     BeforeStartComponent,
     ControlGameComponent,
-    ResultsComponent
+    ResultsComponent,
+    PlayersListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'fame' }),

@@ -1,0 +1,4 @@
+<div class="player" *ngFor="let player of players$ | async"
+     [ngClass]="{ 'offline': !player.isConnected }">
+  {{ player.name }}
+</div>
