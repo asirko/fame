@@ -1,0 +1,14 @@
+@import 'palette';
+@import 'fonts';
+//
+.player-name {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: $font-text;
+    font-size: .8em;
+    color: $color-blue-2;
+    text-align: center;
+    letter-spacing: 2px;
+}
