@@ -4,15 +4,16 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  margin: -10px;
+  //margin: -10px;
 }
 .player {
+  background-color: $color-primary-lighter;
+  border-radius: 50px;
+  //margin: 200px auto 0;
   padding: 10px 20px;
-  margin: 10px;
-  border-radius: 100px;
-  background-color: $color-primary-lightX;
 }
 
 .offline {
   color: $color-secondary;
 }
+ 

@@ -1,0 +1,50 @@
+@import 'palette';
+@import 'fonts';
+//
+.q-background-top {
+    .q-background-top-sun {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        width: 120px;
+        height: 120px;
+        background-color: $color-purple-1;
+        border-radius: 50%;
+    }
+    .q-background-top-orbit-1, .q-background-top-orbit-2 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-style: solid;
+        border-radius: 50%;
+        z-index: 0;
+        &.q-background-top-orbit-1 {
+            border-width: 3px;
+            border-color: $color-purple-1;
+            width: 210px;
+            height: 210px;
+            transform: translate(-50%, -50%) rotate(0deg);
+            animation-name: planetRotation-1;
+            animation-iteration-count: infinite;
+            animation-duration: 100000s;
+            &:after {
+                content: '';
+                width: 24px;
+                height: 24px;
+                background-color: $color-purple-1;
+                border-radius: 50%;
+                position: absolute;
+                top: 76px;
+                left: 76px;
+            } 
+        }
+        &.q-background-top-orbit-2 {
+            border-width: 2px;
+            border-color: rgba($color-purple-2, .3);
+            width: 328px;
+            height: 328px;
+            transform: translate(-50%, -50%) rotate(0deg);
+        }
+    }
+}

@@ -20,14 +20,14 @@
                 margin: 36px 0;
             }
         }
-        .l-background-circle-1, .l-background-circle-2, .l-background-circle-3, .l-background-circle-4 {
+        .l-background-orbit-1, .l-background-orbit-2, .l-background-orbit-3, .l-background-orbit-4 {
             position: absolute;
             top: 50%;
             left: 50%;
             border-style: solid;
             border-radius: 50%;
             z-index: 0;
-            &.l-background-circle-1 {
+            &.l-background-orbit-1 {
                 border-width: 2px;
                 border-color: $color-purple-1;
                 width: 610px;
@@ -47,14 +47,14 @@
                     left: 76px;
                 } 
             }
-            &.l-background-circle-2 {
+            &.l-background-orbit-2 {
                 border-width: 1px;
                 border-color: rgba($color-purple-2, .3);
                 width: 515px;
                 height: 515px;
                 transform: translate(-50%, -50%) rotate(0deg);
             }
-            &.l-background-circle-3 {
+            &.l-background-orbit-3 {
                 border-width: 2px;
                 border-color: $color-purple-3;
                 width: 325px;
@@ -74,7 +74,7 @@
                     left: 30px;
                 }              
             }
-            &.l-background-circle-4 {
+            &.l-background-orbit-4 {
                 border-width: 3px;
                 border-color: $color-purple-4;
                 width: 210px;
