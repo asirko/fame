@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Player } from '../../../shared/models';
 import { PlayerEvent, playerNamespaceName } from '../../../shared/api.const';
-import { tap } from 'rxjs/internal/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +12,7 @@ export class PlayerService {
 
   private _socket = SocketIOClient('/' + playerNamespaceName);
   private _allPlayers$ = new BehaviorSubject<Player[]>(null);
-  readonly allPlayers$: Observable<Player[]> = this._allPlayers$.asObservable().pipe(filter(v => v !== null), tap(console.log));
+  readonly allPlayers$: Observable<Player[]> = this._allPlayers$.asObservable().pipe(filter(v => v !== null));
   private _myself$ = new BehaviorSubject<Player>(null);
   readonly myself$: Observable<Player> = this._myself$.asObservable();
 
