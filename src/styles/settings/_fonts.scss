@@ -1,4 +1,4 @@
-//
+
 @font-face {
     font-family: '911_porscharegular';
     src: url('/assets/fonts/911porschav3-webfont.woff2') format('woff2'),
@@ -32,3 +32,12 @@ $font-regular: 300;
 $font-semibold: 600; 
 $font-bold: 800;
 $font-black: 900;
+
+// Titre
+.titre {
+    text-align: center;
+    font-family: $font-title;
+    font-size: 1.6em;
+    letter-spacing: 1px;
+    color: $color-white;
+}

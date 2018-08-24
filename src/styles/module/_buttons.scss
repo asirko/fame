@@ -1,12 +1,12 @@
 .btn {
-  padding: 15px 20px;
-  border: 1px solid transparent;
-  border-radius: 100px;
-  margin: 10px;
+  font-family: $font-text;
+  font-size: 0.8em;
+  font-weight: $font-bold;
   text-align: center;
+  border-radius: 150px;
   list-style: none;
   outline: none;
-  color: $color-grey-light;
-  background-color: $color-primary-lighter;
+  padding: 20px;
+  margin: 5px auto;
   cursor: pointer;
 }

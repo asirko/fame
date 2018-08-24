@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PlayerService } from '../../player/player.service';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'fame-players-list',
@@ -9,7 +9,17 @@ import { tap } from 'rxjs/operators';
 })
 export class PlayersListComponent {
 
-  players$ = this.playerService.allPlayers$;
+  players$ = this.playerService.allPlayers$.pipe(
+    map(list => list.sort((p1, p2) => {
+      if (p1.isConnected && !p2.isConnected) {
+        return -1;
+      } else if (!p1.isConnected && p2.isConnected) {
+        return 1;
+      } else {
+        return 0;
+      }
+    })),
+  );
 
   constructor(
     private playerService: PlayerService,
