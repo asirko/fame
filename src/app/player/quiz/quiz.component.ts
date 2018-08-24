@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AdminService } from '../../admin/admin.service';
 import { PlayerService } from '../player.service';
-import { Choice, Question } from '../../../../shared/models';
-import { ActivatedRoute } from '@angular/router';
+import {Choice, GameState, Question} from '../../../../shared/models';
+import {ActivatedRoute, Router} from '@angular/router';
 import { filter, first, map, mergeMap, startWith, takeUntil, tap } from 'rxjs/operators';
 import { interval, Subject } from 'rxjs';
 
@@ -48,6 +48,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   constructor(
     private adminService: AdminService,
     private playerService: PlayerService,
+    private router: Router,
     private route: ActivatedRoute,
   ) { }
 
@@ -75,7 +76,10 @@ export class QuizComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$),
     ).subscribe();
 
-    // todo rediriger l'utilisateur à la fin du quiz vers le récapitulatif
+    this.adminService.game$.pipe(
+      filter(g => g.state === GameState.FINISHED),
+      tap(() => this.router.navigate(['..', 'player-home'], { relativeTo: this.route })),
+    ).subscribe();
   }
 
   ngOnDestroy(): void {

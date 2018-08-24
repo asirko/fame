@@ -4,6 +4,7 @@ import { Controller } from '../utils/di';
 import { logger } from '../logger';
 import { map } from 'rxjs/operators';
 import { clone } from '../utils/object-utils';
+import { filter } from 'rxjs/internal/operators';
 
 /**
  * Gère l'état d'avancement de la partie
@@ -29,6 +30,7 @@ export class GameController {
 
   currentQuestion$ = this.game$.pipe(
     map(game => this.extractQuestionFromGame(game)),
+    filter(q => !!q),
   );
   get currentQuestionSnapshot(): Question {
     return this.extractQuestionFromGame(this.gameSnapshot);

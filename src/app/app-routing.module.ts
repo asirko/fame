@@ -31,6 +31,9 @@ const routes: Routes = [
       }, {
         path: 'quiz',
         component: QuizComponent
+      }, {
+        path: 'player-home',
+        component: PlayerHomeComponent
       },
     ]
   }, {

@@ -30,7 +30,10 @@ export class GameAPI extends GenericAPI {
       // for him/her to catch up
       logger.info('Connection on game namespace', {socketId: socket.id});
       socket.emit(GameEvent.GAME, this.gameController.gameSnapshot);
-      socket.emit(GameEvent.CURRENT_QUESTION, this.gameController.currentQuestionSnapshot);
+      const currentQuestion = this.gameController.currentQuestionSnapshot;
+      if (currentQuestion) {
+        socket.emit(GameEvent.CURRENT_QUESTION, currentQuestion);
+      }
 
       socket.on(GameEvent.NEXT_QUESTION, () => {
         logger.info('Request for the next question', {socketId: socket.id});
