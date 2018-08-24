@@ -70,10 +70,12 @@ export class QuizComponent implements OnInit, OnDestroy {
 
     // reset choice at each new question
     this.currentQuestion$.pipe(
-      filter(q => !q.hasAnswer),
+      filter(q => q && !q.hasAnswer),
       tap(() => this.choiceSelected = null),
       takeUntil(this.destroy$),
     ).subscribe();
+
+    // todo rediriger l'utilisateur à la fin du quiz vers le récapitulatif
   }
 
   ngOnDestroy(): void {

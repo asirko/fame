@@ -8,6 +8,7 @@
 @import "styles/layout";
 
 // Specific module
+@import "styles/module/buttons";
 @import "styles/module/question";
 
 html{
@@ -17,7 +18,7 @@ html{
     background-size: 100%;
     overflow: hidden;
   }
-  
+
   body{
     position: relative;
     height: 100%;
@@ -26,7 +27,7 @@ html{
     background-image: linear-gradient(-45deg, transparent, rgba($color-secondary, .35));
     background-repeat: no-repeat;
     background-size: 100%;
-    color: $color-grey-light; 
+    color: $color-grey-light;
     padding: 15px;
     font-family: $font-text;
   }

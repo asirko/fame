@@ -3,8 +3,8 @@
 
 
   <div class="controls">
-    <button *ngIf="question.hasAnswer" (click)="next()">Question suivante</button>
-    <button *ngIf="!question.hasAnswer" (click)="showAnswer()">Montrer la réponse</button>
+    <button class="btn" *ngIf="question.hasAnswer" (click)="next()">Question suivante</button>
+    <button class="btn" *ngIf="!question.hasAnswer" (click)="showAnswer()">Montrer la réponse</button>
   </div>
 
   <h1 class="q-title">Question visible</h1>

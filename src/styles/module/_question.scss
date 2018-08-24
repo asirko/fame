@@ -23,15 +23,7 @@
 }
 
 .q-choice {
-  padding: 15px 20px;
-  border: 1px solid transparent;
-  border-radius: 100px;
-  margin: 10px;
-  text-align: center;
-  list-style: none;
-  outline: none;
-  background-color: $color-primary-lighter;
-  cursor: pointer;
+  @extend .btn;
 
   &.is-selected {
     border-color: $color-secondary-light;
