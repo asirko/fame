@@ -21,8 +21,10 @@ export class PlayersController {
    */
   private _playersScore$ = new BehaviorSubject<Player[]>(null);
 
-  readonly playersScore$ = this._playersScore$.asObservable()
-    .pipe(filter(g => g !== null));
+  readonly playersScore$ = this._playersScore$.asObservable().pipe(
+    filter(g => g !== null),
+    map(list => list.sort((p1, p2) => p2.score - p1.score)),
+  );
 
   get playersScoreSnapshot(): Player[] {
     return this._playersScore$.getValue();
