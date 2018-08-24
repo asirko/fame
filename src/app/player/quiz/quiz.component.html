@@ -14,9 +14,21 @@
     </li>
   </ul>
 
-  <div>{{ timer$ | async }}</div>
-  <div>{{ answerRatioFormated$ | async }}</div>
-  <div>{{ answerRatioNumber$ | async }}</div>
+  <div class="q-station">
+
+    <div class="q-timer">
+      <h2>Timer</h2>
+      <p>{{ timer$ | async }}</p>    
+    </div>
+  
+    <div class="q-number">
+      <h2>Joueurs</h2>
+      <p>{{ answerRatioFormated$ | async }}</p>    
+    </div>
+  
+    <!-- <div>{{ answerRatioNumber$ | async }}</div> -->
+
+  </div>
 
 </div>
 

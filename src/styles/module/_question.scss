@@ -16,7 +16,7 @@
 .q-sentence {
   display: block;
   max-width: 800px;
-  height: 120px;
+  height: 100px;
   margin: 25px auto;
 }
 
@@ -52,5 +52,33 @@
 
   .is-small & {
     //width: calc(50% - 25px);
+  }
+}
+
+.q-station {
+  text-align: center;
+  .q-timer, .q-number {
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    border: 3px solid $color-purple-6;
+    border-radius: 50%;
+    background-color: $color-blue-1;
+    font-family: $font-text;
+    text-align: center;
+    margin: 0 10px;
+    padding: 10px 0;
+    h2 {
+      //display: none;
+      font-size: .8em;
+      font-weight: $font-semibold;
+      font-style: italic;
+      color: $color-purple-6;
+    }
+    p {
+      font-size: 1.2em;
+      font-weight: $font-bold;
+      color: $color-purple-3;
+    }
   }
 }
