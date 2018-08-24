@@ -1,6 +1,19 @@
 @import 'palette';
 @import 'fonts';
 //
+:host {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+.q-background {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    pointer-events: none;
+}
 .q-background-top {
     .q-background-top-sun {
         position: absolute;
@@ -11,6 +24,7 @@
         height: 120px;
         background-color: $color-purple-1;
         border-radius: 50%;
+        z-index: -1;
     }
     .q-background-top-orbit-1, .q-background-top-orbit-2 {
         position: absolute;
@@ -18,33 +32,82 @@
         left: 0;
         border-style: solid;
         border-radius: 50%;
-        z-index: 0;
+        z-index: -1;
         &.q-background-top-orbit-1 {
             border-width: 3px;
             border-color: $color-purple-1;
             width: 210px;
             height: 210px;
-            transform: translate(-50%, -50%) rotate(0deg);
-            animation-name: planetRotation-1;
+            transform: translate(-50%, -50%) rotate(160deg);
+            animation-name: planetRotation-2;
             animation-iteration-count: infinite;
-            animation-duration: 100000s;
+            animation-duration: 80000s;
             &:after {
                 content: '';
-                width: 24px;
-                height: 24px;
+                width: 32px;
+                height: 32px;
                 background-color: $color-purple-1;
                 border-radius: 50%;
                 position: absolute;
-                top: 76px;
-                left: 76px;
+                top: 15px;
+                left: 15px;
             } 
         }
         &.q-background-top-orbit-2 {
             border-width: 2px;
-            border-color: rgba($color-purple-2, .3);
+            border-color: $color-purple-2;
             width: 328px;
             height: 328px;
             transform: translate(-50%, -50%) rotate(0deg);
+        }
+    }
+}
+
+.q-background-bottom {
+    .q-background-bottom-sun {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        transform: translate(50%, 50%);
+        width: 162px;
+        height: 162px;
+        background-color: $color-blue-3;
+        border-radius: 50%;
+        z-index: -1;
+    }
+    .q-background-bottom-orbit-1, .q-background-bottom-orbit-2 {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        border-style: solid;
+        border-radius: 50%;
+        z-index: -1;
+        &.q-background-bottom-orbit-1 {
+            border-width: 6px;
+            border-color: $color-blue-3;
+            width: 318px;
+            height: 318px;
+            transform: translate(50%, 50%) rotate(160deg);
+        }
+        &.q-background-bottom-orbit-2 {
+            border-width: 2px;
+            border-color: $color-blue-3;
+            width: 361px;
+            height: 361px;
+            transform: translate(50%, 50%) rotate(340deg);
+            animation-name: planetRotation-5;
+            animation-iteration-count: infinite;
+            animation-duration: 40000s;
+            &:after {
+                content: '';
+                width: 24px;
+                height: 24px;
+                background-color: $color-blue-3;
+                border-radius: 50%;
+                position: absolute;
+                top: 40px;
+                left: 40px;
+            } 
         }
     }
 }

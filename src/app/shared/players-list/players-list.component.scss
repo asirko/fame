@@ -2,15 +2,23 @@
 
 :host  {
   display: flex;
+  min-width: 300px;
+  max-width: 500px;
+  flex: auto;
   flex-wrap: wrap;
-  justify-content: space-around;
-  //margin: -10px;
+  justify-content: center;
+  align-content: flex-end;
+  margin-bottom: 90px;
 }
 .player {
+  align-self: flex-end;
+  flex-grow: 1;
+  font-size: .8em;
+  text-align: center;
   background-color: $color-primary-lighter;
   border-radius: 50px;
-  //margin: 200px auto 0;
-  padding: 10px 20px;
+  margin: 5px; 
+  padding: 8px 12px;
 }
 
 .offline {

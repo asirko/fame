@@ -9,6 +9,15 @@
     }
 }
 
+@keyframes planetRotation-2 {
+    from {
+        transform: translate(-50%, -50%) rotate(160deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360000deg);
+    }
+}
+
 @keyframes planetRotation-3 {
     from {
         transform: translate(-50%, -50%) rotate(80deg);
@@ -24,5 +33,14 @@
     }
     to {
         transform: translate(-50%, -50%) rotate(360000deg);
+    }
+}
+
+@keyframes planetRotation-5 {
+    from {
+        transform: translate(50%, 50%) rotate(340deg);
+    }
+    to {
+        transform: translate(50%, 50%) rotate(360000deg);
     }
 }
