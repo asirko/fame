@@ -39,9 +39,9 @@ export class QuizComponent implements OnInit, OnDestroy {
       takeUntil(this.currentQuestion$.pipe(filter(q => q.hasAnswer))),
     )),
     map(msTime => Math.round((msTime + this.offset) / 1000)),
-    map(msTime => {
-      const min = Math.floor(msTime / 60);
-      const sec = `${msTime % 60}`.padStart(2, '0');
+    map(sTime => {
+      const min = Math.floor(sTime / 60);
+      const sec = `${sTime % 60}`.padStart(2, '0');
       return `${min}:${sec}`;
     }),
     takeUntil(this.destroy$),
