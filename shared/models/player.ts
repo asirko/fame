@@ -4,6 +4,7 @@ export class Player {
   score: number;
   isConnected: boolean;
   currentAnswer?: string;
+  rank?: number;
   answers: Answer[];
 }
 

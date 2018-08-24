@@ -24,6 +24,20 @@ export class PlayersController {
   readonly playersScore$ = this._playersScore$.asObservable().pipe(
     filter(g => g !== null),
     map(list => list.sort((p1, p2) => p2.score - p1.score)),
+    map(list => {
+      if (!list.length) {
+        return [];
+      }
+      let currentScore = list[0].score;
+      let rank = 1;
+      return list.map((p, index) => {
+        if (currentScore !== p.score) {
+          currentScore = p.score;
+          rank++;
+        }
+        return { ...p, rank };
+      });
+    }),
   );
 
   get playersScoreSnapshot(): Player[] {
