@@ -33,7 +33,7 @@ export class PlayersController {
       return list.map((p, index) => {
         if (currentScore !== p.score) {
           currentScore = p.score;
-          rank++;
+          rank = index + 1;
         }
         return { ...p, rank };
       });
