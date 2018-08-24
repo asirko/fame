@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AdminService } from '../../admin/admin.service';
 import { PlayerService } from '../player.service';
-import {Choice, GameState, Question} from '../../../../shared/models';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Choice, GameState, Question } from '../../../../shared/models';
+import { ActivatedRoute, Router } from '@angular/router';
 import { filter, first, map, mergeMap, startWith, takeUntil, tap } from 'rxjs/operators';
 import { interval, Subject } from 'rxjs';
 
@@ -39,7 +39,11 @@ export class QuizComponent implements OnInit, OnDestroy {
       takeUntil(this.currentQuestion$.pipe(filter(q => q.hasAnswer))),
     )),
     map(msTime => Math.round((msTime + this.offset) / 1000)),
-    map(msTime => `${Math.floor(msTime / 60)}:${msTime % 60}`),
+    map(msTime => {
+      const min = Math.floor(msTime / 60);
+      const sec = `${msTime % 60}`.padStart(2, '0');
+      return `${min}:${sec}`;
+    }),
     takeUntil(this.destroy$),
   );
 
