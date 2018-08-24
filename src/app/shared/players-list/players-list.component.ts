@@ -9,7 +9,7 @@ import { tap } from 'rxjs/operators';
 })
 export class PlayersListComponent {
 
-  players$ = this.playerService.allPlayers$.pipe(tap(console.log));
+  players$ = this.playerService.allPlayers$;
 
   constructor(
     private playerService: PlayerService,
