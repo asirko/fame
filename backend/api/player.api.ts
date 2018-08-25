@@ -28,6 +28,7 @@ export class PlayerAPI extends GenericAPI {
       socket.emit(PlayerEvent.ALL_PLAYERS, this.playersController.playersScoreSnapshot);
       const myselfSub = this.playersController.getPlayerScore$(socket.id)
         .subscribe(myself => socket.emit(PlayerEvent.MYSELF, myself));
+      // todo unsubscribe on disconnect
 
       socket.on(PlayerEvent.ADD_PLAYER, (playerName: string, response: (isAvailable: boolean) => void) => {
         logger.info('request for new player', { askedName: playerName, socketId: socket.id});
