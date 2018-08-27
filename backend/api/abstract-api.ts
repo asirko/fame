@@ -6,12 +6,12 @@ export abstract class GenericAPI {
 
   protected nsp: Namespace;
 
-  abstract manageSingleSocket(): (socket: Socket) => void;
+  abstract manageSingleSocket(s: Socket): void;
 
   initNamespace(io: Server, name: string) {
     logger.info(`create namespace ${name}`);
     this.nsp = io.of(`/${name}`);
-    this.nsp.on(GenericEvent.CONNECTION, this.manageSingleSocket());
+    this.nsp.on(GenericEvent.CONNECTION, s => this.manageSingleSocket(s));
   }
 
 }

@@ -21,33 +21,31 @@ export class PlayerAPI extends GenericAPI {
       .subscribe(gameSummary => this.nsp.emit(PlayerEvent.ALL_PLAYERS, gameSummary));
   }
 
-  manageSingleSocket(): (socket: Socket) => void {
-    return (socket: Socket) => {
-      logger.info('connection on player namespace');
+  manageSingleSocket(socket: Socket): void {
+    logger.info('connection on player namespace');
 
-      socket.emit(PlayerEvent.ALL_PLAYERS, this.playersController.playersScoreSnapshot);
-      const myselfSub = this.playersController.getPlayerScore$(socket.id)
-        .subscribe(myself => socket.emit(PlayerEvent.MYSELF, myself));
+    socket.emit(PlayerEvent.ALL_PLAYERS, this.playersController.playersScoreSnapshot);
+    const myselfSub = this.playersController.getPlayerScore$(socket.id)
+      .subscribe(myself => socket.emit(PlayerEvent.MYSELF, myself));
 
-      socket.on(PlayerEvent.ADD_PLAYER, (playerName: string, response: (isAvailable: boolean) => void) => {
-        logger.info('request for new player', { askedName: playerName, socketId: socket.id});
-        const isAvailable = this.playersController.addPlayer(playerName, socket.id);
-        logger.info(`Name '${playerName}' is ${isAvailable ? '' : 'NOT'} available`, {socketId: socket.id});
-        response(isAvailable);
-      });
+    socket.on(PlayerEvent.ADD_PLAYER, (playerName: string, response: (isAvailable: boolean) => void) => {
+      logger.info('request for new player', {askedName: playerName, socketId: socket.id});
+      const isAvailable = this.playersController.addPlayer(playerName, socket.id);
+      logger.info(`Name '${playerName}' is ${isAvailable ? '' : 'NOT'} available`, {socketId: socket.id});
+      response(isAvailable);
+    });
 
-      socket.on(PlayerEvent.STORE_ANSWER, (choiceId: number) => {
-        const player = this.playersController.getPlayer(socket.id);
-        this.playersController.storeAnswer(player.id, choiceId);
-      });
+    socket.on(PlayerEvent.STORE_ANSWER, (choiceId: number) => {
+      const player = this.playersController.getPlayer(socket.id);
+      this.playersController.storeAnswer(player.id, choiceId);
+    });
 
-      socket.on(GenericEvent.DISCONNECT, () => {
-        const player = this.playersController.getPlayer(socket.id);
-        logger.info(`${(player && player.name) || '-UNKNOWN-'} left the game`, {socketId: socket.id});
-        this.playersController.disconnectPlayer(socket.id);
-        myselfSub.unsubscribe();
-      });
-    };
+    socket.on(GenericEvent.DISCONNECT, () => {
+      const player = this.playersController.getPlayer(socket.id);
+      logger.info(`${(player && player.name) || '-UNKNOWN-'} left the game`, {socketId: socket.id});
+      this.playersController.disconnectPlayer(socket.id);
+      myselfSub.unsubscribe();
+    });
   }
 
 }

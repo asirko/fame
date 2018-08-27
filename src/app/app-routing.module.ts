@@ -12,6 +12,7 @@ import { WaitingRoomComponent } from './player/waiting-room/waiting-room.compone
 import { BeforeStartComponent } from './admin/before-start/before-start.component';
 import { ControlGameComponent } from './admin/control-game/control-game.component';
 import { ResultsComponent } from './admin/results/results.component';
+import { AdminGuard } from './admin/admin.guard';
 
 const routes: Routes = [
   {
@@ -42,6 +43,7 @@ const routes: Routes = [
   }, {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [ AdminGuard ],
     children: [
       {
         path: 'before-start',
