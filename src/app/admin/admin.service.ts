@@ -53,4 +53,13 @@ export class AdminService {
     });
   }
 
+  resetQuiz$(): Observable<void> {
+    return new Observable(observer => {
+      this._socket.emit(GameEvent.RESET, null, () => {
+        observer.next();
+        observer.complete();
+      });
+    });
+  }
+
 }

@@ -57,6 +57,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    console.log(this.route.snapshot.queryParams.reloadTimer, typeof this.route.snapshot.queryParams.reloadTimer);
     // load the offset if necessary (only if timer must be displayed)
     this.currentQuestion$.pipe(
       first(),
@@ -81,8 +82,15 @@ export class QuizComponent implements OnInit, OnDestroy {
     ).subscribe();
 
     this.adminService.game$.pipe(
-      filter(g => g.state === GameState.FINISHED),
-      tap(() => this.router.navigate(['..', 'player-home'], { relativeTo: this.route })),
+      tap(console.log),
+      filter(g => g.state !== GameState.ON_GOING),
+      tap(g => {
+        if (g.state === GameState.NOT_STARTED) {
+          this.router.navigate(['..', 'waitingroom'], { relativeTo: this.route });
+        } else if (g.state === GameState.FINISHED) {
+          this.router.navigate(['..', 'player-home'], { relativeTo: this.route });
+        }
+      }),
     ).subscribe();
   }
 

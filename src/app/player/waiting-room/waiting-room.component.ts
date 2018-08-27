@@ -25,7 +25,6 @@ export class WaitingRoomComponent implements OnInit {
           queryParams.reloadTimer = false;
         }
       }),
-      tap(console.log),
       filter(state => state !== GameState.NOT_STARTED),
       first(),
       map(state => getRouteFromState(state)),

@@ -1,4 +1,4 @@
-import { Player } from '../../shared/models';
+import { GameState, Player } from '../../shared/models';
 import { logger } from '../logger';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, tap } from 'rxjs/operators';
@@ -57,6 +57,13 @@ export class PlayersController {
     this.gameController.game$.pipe(
       map(g => g.currentQuestionIndex),
       distinctUntilChanged(),
+      tap(() => this._updatePlayersScore()),
+    ).subscribe();
+
+    // each time the game is reset
+    this.gameController.game$.pipe(
+      filter(g => g.state === GameState.NOT_STARTED),
+      tap(() => this._players.forEach(p => p.answers = [])),
       tap(() => this._updatePlayersScore()),
     ).subscribe();
   }

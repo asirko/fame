@@ -15,14 +15,17 @@ import { filter } from 'rxjs/internal/operators';
 export class GameController {
 
   private readonly questions: Question[] = readQuestionFile('../resources/questions');
+  private get initialGame(): Game {
+    return {
+      nbQuestions: (this.questions && this.questions.length) || 0,
+      state: GameState.NOT_STARTED,
+      currentQuestionIndex: null,
+      showCurrentAnswer: false,
+      serverQuestionStartedAt: null,
+    };
+  }
 
-  private readonly _game$ = new BehaviorSubject<Game>({
-    nbQuestions: this.questions.length,
-    state: GameState.NOT_STARTED,
-    currentQuestionIndex: null,
-    showCurrentAnswer: false,
-    serverQuestionStartedAt: null,
-  });
+  private readonly _game$ = new BehaviorSubject<Game>({ ...this.initialGame });
   readonly game$ = this._game$.asObservable();
   get gameSnapshot(): Game {
     return { ...this._game$.getValue() };
@@ -41,7 +44,10 @@ export class GameController {
   getCurrentAnswerLabel(answers: Answer[]): string {
     const game = this.gameSnapshot;
     const currentQuestion = this.questions[game.currentQuestionIndex];
-    const currentAnswer = answers.find(a => !currentQuestion || a.questionId === currentQuestion.id);
+    if (!currentQuestion) {
+      return '';
+    }
+    const currentAnswer = answers.find(a => a.questionId === currentQuestion.id);
     if (!currentAnswer) {
       return '';
     }
@@ -105,6 +111,10 @@ export class GameController {
       showCurrentAnswer: false,
       serverQuestionStartedAt: nextTimer,
     });
+  }
+
+  resetGame(): void {
+    this._game$.next({ ...this.initialGame });
   }
 
   private extractQuestionFromGame(game: Game): Question {

@@ -48,6 +48,11 @@ export class GameAPI extends GenericAPI {
       this.gameController.showAnswer();
     });
 
+    socket.on(GameEvent.RESET, () => {
+      logger.info('Request for resetting the whole game', {socketId: socket.id});
+      this.gameController.resetGame();
+    });
+
     socket.on(GenericEvent.DISCONNECT, () => {
       logger.info('Leaving game namespace', {socketId: socket.id});
     });

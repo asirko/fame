@@ -10,6 +10,7 @@ export enum GameEvent {
   NEXT_QUESTION = 'nextQuestion',
   SHOW_ANSWER = 'showAnswer',
   TIMER_OFFSET = 'timerOffset',
+  RESET = 'reset',
 }
 
 export const playerNamespaceName = 'player';
