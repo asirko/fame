@@ -7,7 +7,7 @@
     <button class="btn" *ngIf="!question.hasAnswer" (click)="showAnswer()">Montrer la réponse</button>
   </div>
 
-  <h1 class="q-title">Question visible</h1>
+  <h1 class="q-title titre">Question visible</h1>
   <h2 class="q-subtitle" *ngIf="game$ | async as game">{{ game.currentQuestionIndex + 1 }} / {{ game.nbQuestions }}</h2>
 
   <markdown class="q-sentence" [data]="question.questionLabel"></markdown>
