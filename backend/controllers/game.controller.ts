@@ -40,9 +40,8 @@ export class GameController {
 
   getCurrentAnswerLabel(answers: Answer[]): string {
     const game = this.gameSnapshot;
-    // todo à la fin du quiz, currentQuestion est null !!!
     const currentQuestion = this.questions[game.currentQuestionIndex];
-    const currentAnswer = answers.find(a => a.questionId === currentQuestion.id);
+    const currentAnswer = answers.find(a => !currentQuestion || a.questionId === currentQuestion.id);
     if (!currentAnswer) {
       return '';
     }
