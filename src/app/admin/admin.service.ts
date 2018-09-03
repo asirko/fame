@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import * as SocketIOClient from 'socket.io-client';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { Game, Question } from '../../../shared/models';
 import { GameEvent, gameNamespaceName } from '../../../shared/api.const';
+import { emit$ } from '../shared/utils/socket-utils';
 
 @Injectable({
   providedIn: 'root'
@@ -24,42 +25,26 @@ export class AdminService {
   }
 
   nextQuestion$(): Observable<void> {
-    return new Observable(observer => {
-      this._socket.emit(GameEvent.NEXT_QUESTION, null, () => {
-        observer.next();
-        observer.complete();
-      });
-    });
+    return emit$<void>(this._socket, GameEvent.NEXT_QUESTION);
   }
 
   showAnswer$(): Observable<void> {
-    return new Observable(observer => {
-      this._socket.emit(GameEvent.SHOW_ANSWER, null, () => {
-        observer.next();
-        observer.complete();
-      });
-    });
+    return emit$<void>(this._socket, GameEvent.SHOW_ANSWER);
   }
 
   timerOffset$(): Observable<number> {
-    return Observable.create(observer => {
-      const requestTime = new Date().getTime();
-      this._socket.emit(GameEvent.TIMER_OFFSET, null, (startedSince: number) => {
+    const requestTime = new Date().getTime();
+    return emit$<number>(this._socket, GameEvent.TIMER_OFFSET).pipe(
+      map(startedSince => {
         const responseTime = new Date().getTime();
         const averageTimeToAnswer = (responseTime - requestTime) / 2;
-        observer.next(startedSince + averageTimeToAnswer);
-        observer.complete();
-      });
-    });
+        return startedSince + averageTimeToAnswer;
+      }),
+    );
   }
 
   resetQuiz$(): Observable<void> {
-    return new Observable(observer => {
-      this._socket.emit(GameEvent.RESET, null, () => {
-        observer.next();
-        observer.complete();
-      });
-    });
+    return emit$<void>(this._socket, GameEvent.RESET);
   }
 
 }

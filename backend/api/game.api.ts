@@ -38,6 +38,11 @@ export class GameAPI extends GenericAPI {
       this.gameController.nextQuestion();
     });
 
+    socket.on(GameEvent.PREVIOUS_QUESTION, () => {
+      logger.info('Request for the previous question', {socketId: socket.id});
+      this.gameController.previousQuestion();
+    });
+
     socket.on(GameEvent.TIMER_OFFSET, (unused, response: (offset: number) => void) => {
       logger.info('Request to have timer offset', {socketId: socket.id});
       response(this.gameController.getTimerOffset());
@@ -46,6 +51,11 @@ export class GameAPI extends GenericAPI {
     socket.on(GameEvent.SHOW_ANSWER, () => {
       logger.info('Request for answer of the current question', {socketId: socket.id});
       this.gameController.showAnswer();
+    });
+
+    socket.on(GameEvent.HIDE_ANSWER, () => {
+      logger.info('Request to hide answer of the current question', {socketId: socket.id});
+      this.gameController.hideAnswer();
     });
 
     socket.on(GameEvent.RESET, () => {

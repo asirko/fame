@@ -74,14 +74,19 @@ export class GameController {
       .find(c => c.id === choiceId);
   }
 
-  /**
-   * active l'affichage de la réponse
-   * La question courante a donc maintenant les réponses
-   */
   showAnswer(): void {
+    this.toggleAnswer(true);
+  }
+  hideAnswer(): void {
+    this.toggleAnswer(false);
+  }
+  /**
+   * active/désactive l'affichage de la réponse courante
+   */
+  private toggleAnswer(displayAnswer: boolean): void {
     this._game$.next({
       ...this._game$.getValue(),
-      showCurrentAnswer: true,
+      showCurrentAnswer: displayAnswer,
     });
   }
 
@@ -107,6 +112,23 @@ export class GameController {
     this._game$.next({
       ...game,
       currentQuestionIndex: nextIndex,
+      state: nextGameState,
+      showCurrentAnswer: false,
+      serverQuestionStartedAt: nextTimer,
+    });
+  }
+
+  /**
+   * reviens en arrière d'une question
+   */
+  previousQuestion(): void {
+    const game = this._game$.getValue();
+    const previousIndex = game.currentQuestionIndex > 0 ? game.currentQuestionIndex - 1 : null;
+    const nextGameState = previousIndex !== null ? GameState.ON_GOING : GameState.NOT_STARTED;
+    const nextTimer = nextGameState === GameState.ON_GOING ? new Date() : null;
+    this._game$.next({
+      ...game,
+      currentQuestionIndex: previousIndex,
       state: nextGameState,
       showCurrentAnswer: false,
       serverQuestionStartedAt: nextTimer,

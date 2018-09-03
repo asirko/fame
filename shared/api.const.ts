@@ -8,7 +8,9 @@ export enum GameEvent {
   GAME = 'game',
   CURRENT_QUESTION = 'currentQuestion',
   NEXT_QUESTION = 'nextQuestion',
+  PREVIOUS_QUESTION = 'previousQuestion',
   SHOW_ANSWER = 'showAnswer',
+  HIDE_ANSWER = 'hideAnswer',
   TIMER_OFFSET = 'timerOffset',
   RESET = 'reset',
 }
