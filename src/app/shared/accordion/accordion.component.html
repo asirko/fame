@@ -1,0 +1,3 @@
+<a (click)="toggle()" *ngIf="!isOpen"><ng-content select="[role=title-if-close]"></ng-content></a>
+<a (click)="toggle()" *ngIf="isOpen"><ng-content select="[role=title-if-open]"></ng-content></a>
+<div *ngIf="isOpen"><ng-content select="[role=content]"></ng-content></div>

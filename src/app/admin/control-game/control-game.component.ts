@@ -28,8 +28,4 @@ export class ControlGameComponent implements OnInit {
     this.adminService.showAnswer$().subscribe();
   }
 
-  reset(): void {
-    this.adminService.resetQuiz$().subscribe();
-  }
-
 }

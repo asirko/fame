@@ -18,22 +18,19 @@
     </li>
   </ul>
 
-</div>
+  <table>
+    <tr>
+      <th>Joueur</th>
+      <th>Score</th>
+      <th>Dernière réponse</th>
+    </tr>
+    <tr *ngFor="let player of allPlayers$ | async" [ngClass]="{ 'is-connectec': player.isConnected }">
+      <td>{{ player.name }}</td>
+      <td>{{ player.score }}</td>
+      <td>{{ player.currentAnswer }}</td>
+    </tr>
+  </table>
 
-<table>
-  <tr>
-    <th>Joueur</th>
-    <th>Score</th>
-    <th>Dernière réponse</th>
-  </tr>
-  <tr *ngFor="let player of allPlayers$ | async" [ngClass]="{ 'is-connectec': player.isConnected }">
-    <td>{{ player.name }}</td>
-    <td>{{ player.score }}</td>
-    <td>{{ player.currentAnswer }}</td>
-  </tr>
-</table>
+  <fame-more-actions [question]="question"></fame-more-actions>
 
-
-<div class="controls">
-  <button class="btn" (click)="reset()">Redémarrer le quiz</button>
 </div>

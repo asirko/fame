@@ -19,6 +19,8 @@ import { ResultsComponent } from './admin/results/results.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { PlayersListComponent } from './shared/players-list/players-list.component';
 import { BackgroundComponent } from './shared/background/background.component';
+import { AccordionComponent } from './shared/accordion/accordion.component';
+import { MoreActionsComponent } from './admin/more-actions/more-actions.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { BackgroundComponent } from './shared/background/background.component';
     ControlGameComponent,
     ResultsComponent,
     PlayersListComponent,
-    BackgroundComponent
+    BackgroundComponent,
+    AccordionComponent,
+    MoreActionsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'fame' }),

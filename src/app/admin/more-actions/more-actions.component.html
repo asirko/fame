@@ -1,0 +1,14 @@
+
+<fame-accordion>
+
+  <div role="title-if-close">Plus d'actions</div>
+  <div role="title-if-open">Moins d'actions</div>
+  <div role="content">
+    <div class="controls">
+      <button class="btn" (click)="reset()">Redémarrer le quiz</button>
+      <button class="btn" (click)="previous()">Question précédente</button>
+      <button class="btn" *ngIf="question?.hasAnswer" (click)="hide()">Cache la réponse</button>
+    </div>
+  </div>
+
+</fame-accordion>

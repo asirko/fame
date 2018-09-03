@@ -28,8 +28,16 @@ export class AdminService {
     return emit$<void>(this._socket, GameEvent.NEXT_QUESTION);
   }
 
+  previousQuestion$(): Observable<void> {
+    return emit$<void>(this._socket, GameEvent.PREVIOUS_QUESTION);
+  }
+
   showAnswer$(): Observable<void> {
     return emit$<void>(this._socket, GameEvent.SHOW_ANSWER);
+  }
+
+  hideAnswer$(): Observable<void> {
+    return emit$<void>(this._socket, GameEvent.HIDE_ANSWER);
   }
 
   timerOffset$(): Observable<number> {
