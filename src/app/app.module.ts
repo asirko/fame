@@ -21,6 +21,7 @@ import { PlayersListComponent } from './shared/players-list/players-list.compone
 import { BackgroundComponent } from './shared/background/background.component';
 import { AccordionComponent } from './shared/accordion/accordion.component';
 import { MoreActionsComponent } from './admin/more-actions/more-actions.component';
+import { ModalComponent } from './shared/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { MoreActionsComponent } from './admin/more-actions/more-actions.componen
     BackgroundComponent,
     AccordionComponent,
     MoreActionsComponent,
+    ModalComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'fame' }),
