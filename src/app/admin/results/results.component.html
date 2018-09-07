@@ -2,4 +2,12 @@
   Vous avez fini tout le quiz
 </div>
 
+<ul *ngIf="allPlayers$ | async as players">
+  <li *ngFor="let player of players">
+    <span>{{ player.rank }}</span>
+    <span>{{ player.name }}</span>
+    <span>{{ player.score }}</span>
+  </li>
+</ul>
+
 <fame-more-actions></fame-more-actions>

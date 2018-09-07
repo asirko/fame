@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PlayerService } from '../../player/player.service';
 
 @Component({
   selector: 'fame-results',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResultsComponent implements OnInit {
 
-  constructor() { }
+  readonly allPlayers$ = this.playerService.allPlayers$;
+
+  constructor(
+    private playerService: PlayerService,
+  ) { }
 
   ngOnInit() {
   }
