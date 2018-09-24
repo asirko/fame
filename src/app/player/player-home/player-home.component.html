@@ -1,16 +1,16 @@
 
 <div *ngIf="displayedData$ | async as data">
-  <ul>
-    <li *ngFor="let player of data.podium" [ngClass]="{ 'is-current': data.currentPlayer.name === player.name }">
-      <span>{{ player.rank }}</span>
-      <span>{{ player.name }}</span>
-      <span>{{ player.score }}</span>
+  <ul class="player-podium">
+    <li *ngFor="let player of data.podium" [ngClass]="{ 'is-current': data.currentPlayer.name === player.name }" class="podium-object">
+      <span class="object-rank">{{ player.rank }}</span>
+      <span class="object-name">{{ player.name }}</span>
+      <span class="object-score">{{ player.score }}</span>
     </li>
   </ul>
 
   <div *ngIf="!data.isOnPodium">
-    <span>{{ data.currentPlayer.rank }}</span>
-    <span>{{ data.currentPlayer.name }}</span>
-    <span>{{ data.currentPlayer.score }}</span>
+    <span class="object-rank">{{ data.currentPlayer.rank }}</span>
+    <span class="object-name">{{ data.currentPlayer.name }}</span>
+    <span class="object-score">{{ data.currentPlayer.score }}</span>
   </div>
 </div>
