@@ -1,0 +1,91 @@
+[
+  {
+    "id": 0,
+    "questionLabel": "Selon vous, qui a écris cette ligne de code\u00A0: \n\n```typescript\nconst player = players\n\u00A0\u00A0.find(p => p.id === playerId);\n```",
+    "choices": [
+      {
+        "id": 0,
+        "label": "Étienne",
+        "isTrue": false
+      }, {
+        "id": 1,
+        "label": "Frédéric",
+        "isTrue": false
+      }, {
+        "id": 2,
+        "label": "Mitch",
+        "isTrue": false
+      }, {
+        "id": 3,
+        "label": "Alexandre",
+        "isTrue": true
+      }
+    ]
+  }, {
+    "id": 1,
+    "questionLabel": "Qui a essayé de nous changer les idées avec du badminton\u00A0?",
+    "choices": [
+      {
+        "id": 0,
+        "label": "Étienne",
+        "isTrue": true
+      }, {
+        "id": 1,
+        "label": "Frédéric",
+        "isTrue": false
+      }, {
+        "id": 2,
+        "label": "Mitch",
+        "isTrue": false
+      }, {
+        "id": 3,
+        "label": "Alexandre",
+        "isTrue": false
+      }
+    ]
+  }, {
+    "id": 2,
+    "questionLabel": "Qui avait quasiment fini les maquettes avant que l'on attaque le code\u00A0?",
+    "choices": [
+      {
+        "id": 0,
+        "label": "Étienne",
+        "isTrue": false
+      }, {
+        "id": 1,
+        "label": "Frédéric",
+        "isTrue": true
+      }, {
+        "id": 2,
+        "label": "Mitch",
+        "isTrue": false
+      }, {
+        "id": 3,
+        "label": "Alexandre",
+        "isTrue": false
+      }
+    ]
+  }, {
+    "id": 3,
+    "questionLabel": "Qui a un surnom en lien avec un célèbre devin\u00A0?",
+    "choices": [
+      {
+        "id": 0,
+        "label": "Étienne",
+        "isTrue": false
+      }, {
+        "id": 1,
+        "label": "Frédéric",
+        "isTrue": false
+      }, {
+        "id": 2,
+        "label": "Mitch",
+        "isTrue": true
+      }, {
+        "id": 3,
+        "label": "Alexandre",
+        "isTrue": false
+      }
+    ]
+  }
+]
