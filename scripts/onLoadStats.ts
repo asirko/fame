@@ -7,6 +7,7 @@ const fileName = 'scripts/logs.csv';
 async function test(nb_try = 10) {
   const browser = await launch({headless: true});
   for (let i = 0; i < nb_try; i++) {
+    console.log('tentative démarée à ' + new Date());
     const ms = await singleTest(browser);
     appendFileSync(fileName, `${i},${ms}\n`);
   }
